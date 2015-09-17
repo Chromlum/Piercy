@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.piercystudio.PiercyGame;
+import com.piercystudio.entities.Box;
 import com.piercystudio.entities.Jugador;
 import com.piercystudio.entities.Moneda;
 import com.piercystudio.handlers.GameInput;
@@ -40,7 +41,8 @@ public class PlayState implements Screen{
 	private Skin skin;
 	private Stage myStage;
 	private Jugador jugador;
-	private Moneda[] monedasPrimerNivel;
+	private Moneda[] monedasObject;
+	private Box[] cajasObject;
 	private TextureRegion bg;
 	
 	/* Current Level */
@@ -49,6 +51,7 @@ public class PlayState implements Screen{
 	private Label lblCurrentCoins, lblCantidadCoins, lblNivelText, lblNivel;
 	private JSkin labelSkin;
 	private int asignarMonedas;
+	private int asignarCajas;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -87,10 +90,21 @@ public class PlayState implements Screen{
 			asignarMonedas = 5;
 		if(currentLevel == 2)
 			asignarMonedas = 4;
-		monedasPrimerNivel = new Moneda[asignarMonedas];
-		for(int i = 0; i < monedasPrimerNivel.length; i++){
-			monedasPrimerNivel[i] = new Moneda(map);
-			monedasPrimerNivel[i].setPosition(100+ (i*90), 130);
+		monedasObject = new Moneda[asignarMonedas];
+		for(int i = 0; i < monedasObject.length; i++){
+			monedasObject[i] = new Moneda(map);
+			monedasObject[i].setPosition(100+ (i*90), 200);
+		}
+		
+		/* Cajas */
+		if(currentLevel == 1)
+			asignarCajas = 2;
+		if(currentLevel == 2)
+			asignarCajas = 4;
+		cajasObject = new Box[asignarCajas];
+		for(int i = 0; i < cajasObject.length; i++){
+			cajasObject[i] = new Box(map);
+			cajasObject[i].setPosition(240 + (i * 95), 300);
 		}
 		
 	}
@@ -131,11 +145,15 @@ public class PlayState implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		fondo.setProjectionMatrix(fondoCam.combined);
 		jugador.update(Gdx.graphics.getDeltaTime());
-		for(int i = 0; i < monedasPrimerNivel.length; i++){
-			monedasPrimerNivel[i].update(Gdx.graphics.getDeltaTime());
+		for(int i = 0; i < monedasObject.length; i++){
+			monedasObject[i].update(Gdx.graphics.getDeltaTime());
+		}
+		for(int i = 0; i < cajasObject.length; i++){
+			cajasObject[i].update(Gdx.graphics.getDeltaTime());
 		}
 		handleInput();
-		colisionJugadorMoneda(monedasPrimerNivel);
+		colisionJugadorMoneda(monedasObject);
+		colisionJugadorCaja(cajasObject);
 		sigNivel();
 		Save.gd.setCurrentLevel(currentLevel);
 		Save.save();
@@ -151,9 +169,18 @@ public class PlayState implements Screen{
 		}
 	}
 	
+	public void colisionJugadorCaja(Box[] cajas){
+		for(int i = 0; i < cajas.length; i++){
+			if((int)jugador.getX() == (int)cajas[i].getX() && (jugador.isFalling()==true)){
+				jugador.setPosition(jugador.getX()+10, jugador.getY());
+				jugador.setFalling(false);
+			}
+		}
+	}
+	
 	public void sigNivel(){
 		if(currentLevel == 1){
-			if(currentCoins == monedasPrimerNivel.length){
+			if(currentCoins == monedasObject.length){
 				jugador.setRight(false);
 				currentLevel += 1;
 				this.lblCantidadCoins.setVisible(false);
@@ -171,8 +198,10 @@ public class PlayState implements Screen{
 		if(GameKey.isPressed(GameKey.ESC)){
 			game.setScreen(new MenuScreen(game));
 		}
+		if(GameKey.isPressed(GameKey.ENTER)){
+			jugador.setRight(true);
+		}
 		
-		jugador.setRight(true);
 		
 	}
 	
@@ -183,8 +212,12 @@ public class PlayState implements Screen{
 		renderer.setView(camera);
 		renderer.render();
 		
-		for(int i = 0; i < monedasPrimerNivel.length; i++){
-			monedasPrimerNivel[i].draw(batch);
+		for(int i = 0; i < monedasObject.length; i++){
+			monedasObject[i].draw(batch);
+		}
+		
+		for(int i = 0; i < cajasObject.length; i++){
+			cajasObject[i].draw(batch);
 		}
 		jugador.draw(batch);
 		

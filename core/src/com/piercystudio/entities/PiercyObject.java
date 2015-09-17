@@ -151,6 +151,10 @@ public class PiercyObject {
 		return y;
 	}
 	
+	public boolean isFalling(){
+		return Falling;
+	}
+	
 	/* Setters */
 	public void setLeft(boolean left) {
 		Left = left;
@@ -162,6 +166,10 @@ public class PiercyObject {
 
 	public void setJumping(boolean jumping) {
 		Jumping = jumping;
+	}
+	
+	public void setFalling(boolean falling){
+		Falling = falling;
 	}
 
 }
