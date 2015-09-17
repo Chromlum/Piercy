@@ -30,6 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.piercystudio.PiercyGame;
 import com.piercystudio.handlers.GameInput;
+import com.piercystudio.handlers.GameKey;
 
 public class PlayState implements Screen{
 	/* Gdx */
@@ -41,7 +42,7 @@ public class PlayState implements Screen{
 	private Skin skin;
 	private Stage myStage;
 	
-	public PlayState(PiercyGame game){
+	public PlayState(PiercyGame game, int level){
 		this.game = game;
 		myStage = this.game.getMyStage();
 		Gdx.input.setInputProcessor(myStage);
@@ -67,8 +68,14 @@ public class PlayState implements Screen{
 	
 	public void update(){
 		batch.setProjectionMatrix(camera.combined);
+		handleInput();
 	}
 	
+	public void handleInput(){
+		if(GameKey.isPressed(GameKey.ESC)){
+			game.setScreen(new MenuScreen(game));
+		}
+	}
 	
 	public void draw(){
 		

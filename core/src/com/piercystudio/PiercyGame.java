@@ -37,6 +37,7 @@ public class PiercyGame extends Game {
 		
 		/* Graficos */
 		res.loadImage("logoMenu", "logoMenu.png");
+		res.loadImage("player", "Sprites/sprites.png");
 		
 		setScreen(new MenuScreen(this));
 		
