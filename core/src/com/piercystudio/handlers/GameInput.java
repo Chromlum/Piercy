@@ -19,6 +19,7 @@ public class GameInput extends InputAdapter{
 			GameKey.setKey(GameKey.ENTER, true);
 		if(keycode == Keys.ESCAPE)
 			GameKey.setKey(GameKey.ESC, true);
+
 		
 		return true;
 	}

@@ -20,11 +20,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.piercystudio.PiercyGame;
 import com.piercystudio.entities.Jugador;
+import com.piercystudio.entities.Moneda;
 import com.piercystudio.handlers.GameInput;
 import com.piercystudio.handlers.GameKey;
+import com.piercystudio.handlers.JSkin;
 import com.piercystudio.handlers.Save;
 
 public class PlayState implements Screen{
@@ -37,10 +40,14 @@ public class PlayState implements Screen{
 	private Skin skin;
 	private Stage myStage;
 	private Jugador jugador;
+	private Moneda[] monedasPrimerNivel;
 	private TextureRegion bg;
 	
 	/* Current Level */
 	private int currentLevel;
+	private int currentCoins;
+	private Label lblCurrentCoins, lblCantidadCoins;
+	private JSkin labelSkin;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -56,13 +63,25 @@ public class PlayState implements Screen{
 		fondo = new SpriteBatch();
 		Gdx.input.setInputProcessor(new GameInput());
 		skin = new Skin();
+		labelSkin = new JSkin();
 		
 		/* Mapa */
 		map = new TmxMapLoader().load(PiercyGame.res.getLevel(currentLevel));
 		renderer = new OrthogonalTiledMapRenderer(map);
 		jugador = new Jugador(map);
 		jugador.setPosition(70, 130);
+		currentCoins = 0;
+		lblCurrentCoins = new Label("Monedas", labelSkin);
+		lblCantidadCoins = new Label("0", labelSkin);
+		lblCurrentCoins.setVisible(true);
+		lblCantidadCoins.setVisible(true);
 		
+		/* Monedas: Primer Nivel */
+		monedasPrimerNivel = new Moneda[4];
+		for(int i = 0; i < monedasPrimerNivel.length; i++){
+			monedasPrimerNivel[i] = new Moneda(map);
+			monedasPrimerNivel[i].setPosition(100+ (i*90), 130);
+		}
 		
 	}
 
@@ -102,15 +121,47 @@ public class PlayState implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		fondo.setProjectionMatrix(fondoCam.combined);
 		jugador.update(Gdx.graphics.getDeltaTime());
+		for(int i = 0; i < monedasPrimerNivel.length; i++){
+			monedasPrimerNivel[i].update(Gdx.graphics.getDeltaTime());
+		}
 		handleInput();
+		colisionJugadorMoneda(monedasPrimerNivel);
+		sigNivel();
 		Save.gd.setCurrentLevel(currentLevel);
 		Save.save();
+	}
+	
+	public void colisionJugadorMoneda(Moneda[] monedas){
+		for(int i = 0; i < monedas.length; i ++){
+			if(((int)jugador.getX() == monedas[i].getX()) || (jugador.getY() == monedas[i].getX())){
+				monedas[i].setPosition(500, 1500);
+				currentCoins += 1;
+				lblCantidadCoins.setText(String.valueOf(currentCoins));
+			}
+		}
+	}
+	
+	public void sigNivel(){
+		if(currentLevel == 1){
+			if(currentCoins == monedasPrimerNivel.length){
+				jugador.setRight(false);
+				currentLevel += 1;
+				this.lblCantidadCoins.setVisible(false);
+				this.lblCurrentCoins.setVisible(false);
+				Save.gd.setCurrentLevel(currentLevel);
+				Save.save();
+				game.setScreen(new PlayState(game, currentLevel));
+			}
+		}
 	}
 	
 	public void handleInput(){
 		if(GameKey.isPressed(GameKey.ESC)){
 			game.setScreen(new MenuScreen(game));
 		}
+		
+		jugador.setRight(true);
+		
 	}
 	
 	public void draw(){
@@ -119,7 +170,20 @@ public class PlayState implements Screen{
 		fondo.end();
 		renderer.setView(camera);
 		renderer.render();
+		
+		for(int i = 0; i < monedasPrimerNivel.length; i++){
+			monedasPrimerNivel[i].draw(batch);
+		}
 		jugador.draw(batch);
+		
+		/* Texto */
+		this.lblCurrentCoins.setX(PiercyGame.WIDTH / 2  + 300);
+		this.lblCurrentCoins.setY(PiercyGame.HEIGHT / 2  + 270);
+		this.game.getMyStage().addActor(lblCurrentCoins);
+		
+		this.lblCantidadCoins.setX(PiercyGame.WIDTH / 2  + 500);
+		this.lblCantidadCoins.setY(PiercyGame.HEIGHT / 2  + 270);
+		this.game.getMyStage().addActor(lblCantidadCoins);
 	}
 
 	public void resize(int width, int height) { }
