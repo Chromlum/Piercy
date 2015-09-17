@@ -46,8 +46,9 @@ public class PlayState implements Screen{
 	/* Current Level */
 	private int currentLevel;
 	private int currentCoins;
-	private Label lblCurrentCoins, lblCantidadCoins;
+	private Label lblCurrentCoins, lblCantidadCoins, lblNivelText, lblNivel;
 	private JSkin labelSkin;
+	private int asignarMonedas;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -76,8 +77,17 @@ public class PlayState implements Screen{
 		lblCurrentCoins.setVisible(true);
 		lblCantidadCoins.setVisible(true);
 		
+		lblNivelText = new Label("Nivel: ", labelSkin);
+		lblNivel = new Label(String.valueOf(currentLevel), labelSkin);
+		lblNivelText.setVisible(true);
+		lblNivel.setVisible(true);
+		
 		/* Monedas: Primer Nivel */
-		monedasPrimerNivel = new Moneda[4];
+		if(currentLevel == 1)
+			asignarMonedas = 5;
+		if(currentLevel == 2)
+			asignarMonedas = 4;
+		monedasPrimerNivel = new Moneda[asignarMonedas];
 		for(int i = 0; i < monedasPrimerNivel.length; i++){
 			monedasPrimerNivel[i] = new Moneda(map);
 			monedasPrimerNivel[i].setPosition(100+ (i*90), 130);
@@ -148,6 +158,8 @@ public class PlayState implements Screen{
 				currentLevel += 1;
 				this.lblCantidadCoins.setVisible(false);
 				this.lblCurrentCoins.setVisible(false);
+				this.lblNivelText.setVisible(false);
+				this.lblNivel.setVisible(false);
 				Save.gd.setCurrentLevel(currentLevel);
 				Save.save();
 				game.setScreen(new PlayState(game, currentLevel));
@@ -184,6 +196,14 @@ public class PlayState implements Screen{
 		this.lblCantidadCoins.setX(PiercyGame.WIDTH / 2  + 500);
 		this.lblCantidadCoins.setY(PiercyGame.HEIGHT / 2  + 270);
 		this.game.getMyStage().addActor(lblCantidadCoins);
+		
+		this.lblNivelText.setX(PiercyGame.WIDTH / 2 - 150);
+		this.lblNivelText.setY(PiercyGame.HEIGHT / 2 + 270);
+		this.game.getMyStage().addActor(lblNivelText);
+		
+		this.lblNivel.setX(PiercyGame.WIDTH / 2 );
+		this.lblNivel.setY(PiercyGame.HEIGHT / 2 + 270);
+		this.game.getMyStage().addActor(lblNivel);
 	}
 
 	public void resize(int width, int height) { }
