@@ -5,6 +5,7 @@
  * 16/09/15
  * 
  * Crea el juego.
+ * 
  */
 package com.piercystudio;
 
@@ -31,6 +32,9 @@ public class PiercyGame extends Game {
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 		batch = new SpriteBatch();
 		res = new Content();
+		
+		/* Graficos */
+		res.loadImage("logoMenu", "logoMenu.png");
 		
 		setScreen(new MenuScreen(this));
 		
