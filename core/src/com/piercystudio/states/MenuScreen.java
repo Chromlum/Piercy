@@ -34,6 +34,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.piercystudio.PiercyGame;
+import com.piercystudio.handlers.Save;
 
 public class MenuScreen implements Screen{
 	
@@ -46,12 +47,19 @@ public class MenuScreen implements Screen{
 	private TextureRegion logo;
 	
 	public MenuScreen(PiercyGame game){
+		
+		/* Cargar / crear savefile */
+		Save.load();
+		if(Save.gd.getCurrentLevel() == 0){
+			Save.gd.init();
+		}
+		
 		create();
 		this.game = game;
 		
 		
 	}
-	
+	/* Crea menu con botones */
 	public void create(){
 		batch = new SpriteBatch();
 		myStage = new Stage();
@@ -60,6 +68,7 @@ public class MenuScreen implements Screen{
 		Texture textura = PiercyGame.res.getImage("logoMenu");
 		logo = new TextureRegion(textura, 300, 150);
 		
+		/* Comienza creacion y colocacion de botones */
 		skin = new Skin();
 		
 		Pixmap pixmap = new Pixmap(150, 50, Format.RGBA8888);
@@ -96,6 +105,8 @@ public class MenuScreen implements Screen{
 		final TextButton textButton4 = new TextButton("SALIR", textButtonStyle);
 		textButton4.setPosition(PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 - 100);
 		myStage.addActor(textButton4);
+		
+		/* Listeners de botones */
 		
 		textButton.addListener(new ChangeListener(){
 			

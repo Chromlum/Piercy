@@ -15,13 +15,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class Content {
 
-	// un contenido diferente por cada HashMap
+	/* Texturas | Musica | Sonidos | Niveles */
 	private HashMap<String, Texture> texturas;
 	private HashMap<String, Music> musica;
 	private HashMap<String, Sound> sfx;
+	private HashMap<Integer, TiledMap> niveles;
 
 	public Content() {
 		texturas = new HashMap<String, Texture>();
@@ -29,7 +32,7 @@ public class Content {
 		sfx = new HashMap<String, Sound>();
 	}
 
-	// Contenido: graficos
+	/* Graficos */
 	public void loadImage(String key, String path) {
 		texturas.put(key, new Texture(Gdx.files.internal(path)));
 	}
@@ -38,7 +41,7 @@ public class Content {
 		return texturas.get(key);
 	}
 	
-	// Contenido: Musica y SFX
+	/* Musica */
 	public void loadMusic(String key, String path){
 		musica.put(key, Gdx.audio.newMusic(Gdx.files.internal(path)));
 	}
@@ -47,12 +50,18 @@ public class Content {
 		return musica.get(key);
 	}
 	
+	/* Sonidos */
 	public void loadSound(String key, String path){
 		sfx.put(key, Gdx.audio.newSound(Gdx.files.internal(path)));
 	}
 	
 	public Sound getSound(String key){
 		return sfx.get(key);
+	}
+	
+	/* Niveles */
+	public void loadLevel(int key, String path){
+		niveles.put(key, new TmxMapLoader().load(path));
 	}
 }
 
