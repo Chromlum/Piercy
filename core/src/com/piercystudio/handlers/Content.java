@@ -24,12 +24,13 @@ public class Content {
 	private HashMap<String, Texture> texturas;
 	private HashMap<String, Music> musica;
 	private HashMap<String, Sound> sfx;
-	private HashMap<Integer, TiledMap> niveles;
+	private HashMap<Integer, String> niveles;
 
 	public Content() {
 		texturas = new HashMap<String, Texture>();
 		musica = new HashMap<String, Music>();
 		sfx = new HashMap<String, Sound>();
+		niveles = new HashMap<Integer, String>();
 	}
 
 	/* Graficos */
@@ -61,7 +62,11 @@ public class Content {
 	
 	/* Niveles */
 	public void loadLevel(int key, String path){
-		niveles.put(key, new TmxMapLoader().load(path));
+		niveles.put(key, path);
+	}
+	
+	public String getLevel(int key){
+		return niveles.get(key);
 	}
 }
 

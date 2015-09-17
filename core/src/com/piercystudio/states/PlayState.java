@@ -11,26 +11,19 @@ package com.piercystudio.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.piercystudio.PiercyGame;
+import com.piercystudio.entities.Jugador;
 import com.piercystudio.handlers.GameInput;
 import com.piercystudio.handlers.GameKey;
+import com.piercystudio.handlers.Save;
 
 public class PlayState implements Screen{
 	/* Gdx */
@@ -41,15 +34,26 @@ public class PlayState implements Screen{
 	private OrthogonalTiledMapRenderer renderer;
 	private Skin skin;
 	private Stage myStage;
+	private Jugador jugador;
+	
+	/* Current Level */
+	private int currentLevel;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
+		currentLevel = level;
 		myStage = this.game.getMyStage();
 		Gdx.input.setInputProcessor(myStage);
 		camera = this.game.getCamera();
 		batch = this.game.getBatch();
 		Gdx.input.setInputProcessor(new GameInput());
 		skin = new Skin();
+		
+		/* Mapa */
+		map = new TmxMapLoader().load(PiercyGame.res.getLevel(currentLevel));
+		renderer = new OrthogonalTiledMapRenderer(map);
+		jugador = new Jugador(map);
+		jugador.setPosition(500, 400);
 		
 		
 	}
@@ -62,13 +66,36 @@ public class PlayState implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.myStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		this.myStage.draw();
+		seguirJugador();
 		update();
 		draw();
 	}
 	
+	/* Camara sigue al jugador */
+	public void seguirJugador(){
+		camera.position.x = (int) jugador.getX() + PiercyGame.WIDTH / 20;
+		if (camera.position.x < camera.viewportWidth / 2) {
+			camera.position.x = camera.viewportWidth / 2;
+		}
+		if (camera.position.x > 1600 - camera.viewportWidth / 2) {
+			camera.position.x = 1600 - camera.viewportWidth / 2;
+		}
+		camera.position.y = (int) jugador.getY() + PiercyGame.HEIGHT / 20;
+		if (camera.position.y < camera.viewportHeight / 2) {
+			camera.position.y = camera.viewportHeight / 2;
+		}
+		if (camera.position.y > 1600 - camera.viewportHeight / 2) {
+			camera.position.y = camera.viewportHeight / 2;
+		}
+		camera.update();
+	}
+	
 	public void update(){
 		batch.setProjectionMatrix(camera.combined);
+		jugador.update(Gdx.graphics.getDeltaTime());
 		handleInput();
+		Save.gd.setCurrentLevel(currentLevel);
+		Save.save();
 	}
 	
 	public void handleInput(){
@@ -78,7 +105,9 @@ public class PlayState implements Screen{
 	}
 	
 	public void draw(){
-		
+		renderer.setView(camera);
+		renderer.render();
+		jugador.draw(batch);
 	}
 
 	public void resize(int width, int height) { }

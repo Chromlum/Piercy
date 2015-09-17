@@ -49,16 +49,18 @@ public class MenuScreen implements Screen{
 	public MenuScreen(PiercyGame game){
 		
 		/* Cargar / crear savefile */
+		
 		Save.load();
 		if(Save.gd.getCurrentLevel() == 0){
 			Save.gd.init();
 		}
-		
+	
 		create();
 		this.game = game;
 		
 		
 	}
+	
 	/* Crea menu con botones */
 	public void create(){
 		batch = new SpriteBatch();
@@ -91,24 +93,32 @@ public class MenuScreen implements Screen{
 		skin.add("default", textButtonStyle);
 		
 		final TextButton textButton = new TextButton("JUEGO NUEVO", textButtonStyle);
-		textButton.setPosition(PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 50);
+		textButton.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2 + 50);
 		myStage.addActor(textButton);
 		
 		final TextButton textButton2 = new TextButton("CONTINUAR", textButtonStyle);
-		textButton2.setPosition(PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2);
+		textButton2.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2);
 		myStage.addActor(textButton2);
 		
 		final TextButton textButton3 = new TextButton("ESTADISTICAS", textButtonStyle);
-		textButton3.setPosition(PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 - 50);
+		textButton3.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2 - 50);
 		myStage.addActor(textButton3);
 		
 		final TextButton textButton4 = new TextButton("SALIR", textButtonStyle);
-		textButton4.setPosition(PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 - 100);
+		textButton4.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2 - 100);
 		myStage.addActor(textButton4);
 		
 		/* Listeners de botones */
 		
 		textButton.addListener(new ChangeListener(){
+			
+			public void changed (ChangeEvent event, Actor actor){
+				game.setScreen(new PlayState(game, 1));
+			}
+			
+		});
+		
+		textButton2.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
 				game.setScreen(new PlayState(game, Save.gd.getCurrentLevel()));
@@ -143,7 +153,7 @@ public class MenuScreen implements Screen{
 	
 	public void draw(){
 		batch.begin();
-		batch.draw(logo, PiercyGame.WIDTH / 2 -80, PiercyGame.HEIGHT / 2 + 100, 300, 150);
+		batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
 		batch.end();
 	}
 	
