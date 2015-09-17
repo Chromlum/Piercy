@@ -1,4 +1,4 @@
-package com.piercystudio;
+package com.piercystudio.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.piercystudio.PiercyGame;
+import com.piercystudio.handlers.GameInput;
 
 public class PlayState implements Screen{
 	

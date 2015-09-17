@@ -16,6 +16,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.piercystudio.handlers.Content;
+import com.piercystudio.states.MenuScreen;
 
 public class PiercyGame extends Game {
 	private Stage myStage;

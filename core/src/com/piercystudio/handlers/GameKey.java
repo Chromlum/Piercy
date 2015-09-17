@@ -1,4 +1,4 @@
-package com.piercystudio;
+package com.piercystudio.handlers;
 
 public class GameKey {
 	

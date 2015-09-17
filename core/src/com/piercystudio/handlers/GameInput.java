@@ -1,4 +1,4 @@
-package com.piercystudio;
+package com.piercystudio.handlers;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;

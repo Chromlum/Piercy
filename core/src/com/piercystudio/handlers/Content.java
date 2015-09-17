@@ -7,7 +7,7 @@
  * Gestor de contenidos. Carga imagenes y sonidos.
  * 
  */
-package com.piercystudio;
+package com.piercystudio.handlers;
 
 import java.util.HashMap;
 

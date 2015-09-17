@@ -12,7 +12,7 @@
  * 			4. Salir del juego
  * 
  */
-package com.piercystudio;
+package com.piercystudio.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -33,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.piercystudio.PiercyGame;
 
 public class MenuScreen implements Screen{
 	
