@@ -38,6 +38,7 @@ public class PiercyGame extends Game {
 		/* Graficos */
 		res.loadImage("logoMenu", "logoMenu.png");
 		res.loadImage("player", "Sprites/sprites.png");
+		res.loadImage("bg", "Maps/JnRLayer01.png");
 		
 		/* Mapas */
 		res.loadLevel(1, "Maps/map1.tmx");

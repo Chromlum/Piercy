@@ -18,6 +18,7 @@ public class GameData implements Serializable{
 	public boolean firstRun;
 	
 	public int currentLevel = 0;
+	public int exp;
 	
 	public GameData(){
 		firstRun = true;
@@ -27,7 +28,7 @@ public class GameData implements Serializable{
 		
 		/* Empezar juego en primer nivel */
 		currentLevel = 1;
-		
+		exp = 0;
 	}
 	
 	public int getCurrentLevel(){

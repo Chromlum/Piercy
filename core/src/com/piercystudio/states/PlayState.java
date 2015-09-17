@@ -13,7 +13,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -28,13 +30,14 @@ import com.piercystudio.handlers.Save;
 public class PlayState implements Screen{
 	/* Gdx */
 	private PiercyGame game;
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
+	private OrthographicCamera camera, fondoCam;
+	private SpriteBatch batch, fondo;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private Skin skin;
 	private Stage myStage;
 	private Jugador jugador;
+	private TextureRegion bg;
 	
 	/* Current Level */
 	private int currentLevel;
@@ -45,7 +48,12 @@ public class PlayState implements Screen{
 		myStage = this.game.getMyStage();
 		Gdx.input.setInputProcessor(myStage);
 		camera = this.game.getCamera();
+		fondoCam = new OrthographicCamera();
+		fondoCam.setToOrtho(false, PiercyGame.WIDTH, PiercyGame.HEIGHT);
+		Texture tex = PiercyGame.res.getImage("bg");
+		bg = new TextureRegion(tex, 400, 240);
 		batch = this.game.getBatch();
+		fondo = new SpriteBatch();
 		Gdx.input.setInputProcessor(new GameInput());
 		skin = new Skin();
 		
@@ -53,7 +61,7 @@ public class PlayState implements Screen{
 		map = new TmxMapLoader().load(PiercyGame.res.getLevel(currentLevel));
 		renderer = new OrthogonalTiledMapRenderer(map);
 		jugador = new Jugador(map);
-		jugador.setPosition(500, 400);
+		jugador.setPosition(70, 130);
 		
 		
 	}
@@ -92,6 +100,7 @@ public class PlayState implements Screen{
 	
 	public void update(){
 		batch.setProjectionMatrix(camera.combined);
+		fondo.setProjectionMatrix(fondoCam.combined);
 		jugador.update(Gdx.graphics.getDeltaTime());
 		handleInput();
 		Save.gd.setCurrentLevel(currentLevel);
@@ -105,6 +114,9 @@ public class PlayState implements Screen{
 	}
 	
 	public void draw(){
+		fondo.begin();
+		fondo.draw(bg, 0, 0, 600, 480);
+		fondo.end();
 		renderer.setView(camera);
 		renderer.render();
 		jugador.draw(batch);

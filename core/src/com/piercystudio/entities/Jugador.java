@@ -20,8 +20,8 @@ public class Jugador extends PiercyObject{
 	public Jugador(TiledMap map) {
 		super(map);
 		facingRight = true;
-		width = height = 26;
-		cwidth = cheight = 24;
+		width = height = 42;
+		cwidth = cheight = 40;
 		fallSpeed = 0.10;
 		moveSpeed = 0.08;
 		maxSpeed = 1.7;
