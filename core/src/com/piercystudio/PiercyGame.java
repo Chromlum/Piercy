@@ -5,6 +5,7 @@
  * 16/09/15
  * 
  * Crea el juego.
+ * 
  */
 package com.piercystudio;
 
@@ -15,6 +16,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.piercystudio.handlers.Content;
+import com.piercystudio.states.MenuScreen;
 
 public class PiercyGame extends Game {
 	private Stage myStage;
@@ -31,6 +34,17 @@ public class PiercyGame extends Game {
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 		batch = new SpriteBatch();
 		res = new Content();
+		
+		/* Graficos */
+		res.loadImage("logoMenu", "logoMenu.png");
+		res.loadImage("player", "Sprites/sprites.png");
+		res.loadImage("coin", "Sprites/coinsprite.png");
+		res.loadImage("box","Sprites/box.png");
+		res.loadImage("bg", "Maps/JnRLayer01.png");
+		
+		/* Mapas */
+		res.loadLevel(1, "Maps/map1.tmx");
+		res.loadLevel(2, "Maps/map2.tmx");
 		
 		setScreen(new MenuScreen(this));
 		
