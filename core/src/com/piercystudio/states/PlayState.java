@@ -275,6 +275,7 @@ public class PlayState implements Screen{
 	public void dispose() { 
 		myStage.dispose();
 		skin.dispose();
+		labelSkin.dispose();
 	}
 
 	
