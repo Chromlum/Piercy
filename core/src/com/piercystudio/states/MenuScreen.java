@@ -18,7 +18,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,7 +40,6 @@ public class MenuScreen implements Screen{
 	/* Gdx */
 	private PiercyGame game;
 	private Stage myStage;
-	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Skin skin;
 	private TextureRegion logo;
@@ -168,8 +166,9 @@ public class MenuScreen implements Screen{
 	public void dispose() { 
 		
 		myStage.dispose();
+		logo.getTexture().dispose();
 		skin.dispose();
-		
+		batch.dispose();		
 	}
 	
 	

@@ -26,6 +26,8 @@ public class PiercyGame extends Game {
 	public static int WIDTH = 480;
 	public static int HEIGHT = 320;
 	public static Content res;
+	public static final String TITULO = "Piercy";
+	public static final String VERSION = "0.0.1";
 	
 	
 	public void create () {
@@ -65,7 +67,19 @@ public class PiercyGame extends Game {
 		return batch;
 	}
 
+
 	public Stage getMyStage() {
 		return myStage;
 	}
+
+	public String getVersion(){
+		return VERSION;
+	}
+	@Override
+	public void dispose(){
+		super.dispose();
+		this.batch.dispose();
+		this.myStage.dispose();
+	}
+
 }

@@ -7,7 +7,8 @@ import com.piercystudio.PiercyGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "Piercy";
+		config.title = PiercyGame.TITULO + " v" + PiercyGame.VERSION;
+		config.vSyncEnabled = true;
 		config.width = 800;
 		config.height = 480;
 		

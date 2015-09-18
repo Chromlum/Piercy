@@ -14,14 +14,19 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.piercystudio.PiercyGame;
 import com.piercystudio.entities.Box;
 import com.piercystudio.entities.Jugador;
@@ -53,6 +58,11 @@ public class PlayState implements Screen{
 	private int asignarMonedas;
 	private int asignarCajas;
 	
+	/* Atributos de consola */
+	private BitmapFont blackFont;
+	
+	private TextArea CONSOLA;
+	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
 		currentLevel = level;
@@ -65,7 +75,7 @@ public class PlayState implements Screen{
 		bg = new TextureRegion(tex, 400, 240);
 		batch = this.game.getBatch();
 		fondo = new SpriteBatch();
-		Gdx.input.setInputProcessor(new GameInput());
+		Gdx.input.setInputProcessor(myStage);
 		skin = new Skin();
 		labelSkin = new JSkin();
 		
@@ -106,10 +116,25 @@ public class PlayState implements Screen{
 			cajasObject[i] = new Box(map);
 			cajasObject[i].setPosition(240 + (i * 95), 300);
 		}
-		
 	}
 
-	public void show() { }
+	public void show() {
+		Skin skin = new Skin(Gdx.files.internal("ConsoleSkin/uiskin.json"));
+		/* Consola */
+		CONSOLA = new TextArea("", skin);
+		CONSOLA.setVisible(true);
+		CONSOLA.setWidth(Gdx.graphics.getWidth());
+		int height = Gdx.graphics.getHeight();
+		CONSOLA.setHeight((int)(height * 0.2));
+		CONSOLA.setY(height - (int)(height* 0.5));
+		// CONSOLA.setColor(0f, 0f, 0f, 0f);
+		/*         */ 
+		myStage.addActor(CONSOLA);
+		CONSOLA.addAction(Actions.fadeOut(0));
+		CONSOLA.addAction(Actions.fadeIn(3));
+		myStage.setKeyboardFocus(CONSOLA);
+		
+	}
 
 	public void render(float delta) { 
 		
