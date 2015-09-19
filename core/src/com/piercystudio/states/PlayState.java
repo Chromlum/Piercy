@@ -14,24 +14,24 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.piercystudio.PiercyGame;
 import com.piercystudio.entities.Box;
 import com.piercystudio.entities.Jugador;
 import com.piercystudio.entities.Moneda;
-import com.piercystudio.handlers.GameInput;
 import com.piercystudio.handlers.GameKey;
 import com.piercystudio.handlers.JSkin;
 import com.piercystudio.handlers.Save;
@@ -59,9 +59,8 @@ public class PlayState implements Screen{
 	private int asignarCajas;
 	
 	/* Atributos de consola */
-	private BitmapFont blackFont;
-	
-	private TextArea CONSOLA;
+	private TextButton botonConsola;
+	private TextArea consola;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -120,20 +119,54 @@ public class PlayState implements Screen{
 
 	public void show() {
 		Skin skin = new Skin(Gdx.files.internal("ConsoleSkin/uiskin.json"));
-		/* Consola */
-		CONSOLA = new TextArea("", skin);
-		CONSOLA.setVisible(true);
-		CONSOLA.setWidth(Gdx.graphics.getWidth());
+		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
-		CONSOLA.setHeight((int)(height * 0.2));
-		CONSOLA.setY(height - (int)(height* 0.5));
-		// CONSOLA.setColor(0f, 0f, 0f, 0f);
+		/* Consola */
+		botonConsola = new TextButton("RUN", skin);
+		consola = new TextArea("", skin);
+		consola.setVisible(true);
+		consola.setWidth(width);
+		consola.setHeight((int)(height * 0.2));
+		consola.setY(height - (int)(height * 0.5));
+		botonConsola.setX(width - botonConsola.getWidth());
+		botonConsola.setY(consola.getY() - botonConsola.getHeight());
 		/*         */ 
-		myStage.addActor(CONSOLA);
-		CONSOLA.addAction(Actions.fadeOut(0));
-		CONSOLA.addAction(Actions.fadeIn(3));
-		myStage.setKeyboardFocus(CONSOLA);
 		
+		// Se aniaden al estadio
+		myStage.addActor(botonConsola);
+		myStage.addActor(consola);
+		
+		// Animaciones de entrada
+		botonConsola.addAction(Actions.fadeOut(0));
+		botonConsola.addAction(Actions.fadeIn(3));
+		consola.addAction(Actions.fadeOut(0));
+		consola.addAction(Actions.fadeIn(3));
+		myStage.setKeyboardFocus(consola);
+		
+		consola.addListener(new InputListener(){
+			
+			public boolean keyTyped(InputEvent event, char character){
+				syntaxHighlight(event, character);
+				return true;
+			}
+		});
+		
+		botonConsola.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				interpretarCodigo(event, x, y);
+			}
+		});
+		
+	}
+	
+	public void syntaxHighlight(InputEvent e, char c){
+		System.out.println(c);
+		//TODO
+	}
+	
+	public void interpretarCodigo(InputEvent event, float x, float y){
+		String codigo = consola.getText();
+		// TODO
 	}
 
 	public void render(float delta) { 
