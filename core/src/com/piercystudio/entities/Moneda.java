@@ -22,7 +22,7 @@ public class Moneda extends PiercyObject{
 		stopJumpSpeed = 0.3;
 		// carga texturas (sprites)
 		Texture tex = PiercyGame.res.getImage("coin");
-		TextureRegion[] sprites = new TextureRegion[4];
+		TextureRegion[] sprites = new TextureRegion[1];
 		for (int i = 0; i < sprites.length; i++) {
 			sprites[i] = new TextureRegion(tex, i * 32, 0, 32, 32);
 		}

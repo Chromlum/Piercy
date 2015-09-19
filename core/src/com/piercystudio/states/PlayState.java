@@ -120,7 +120,7 @@ public class PlayState implements Screen{
 	public void show() {
 		Skin skin = new Skin(Gdx.files.internal("ConsoleSkin/uiskin.json"));
 		int width = Gdx.graphics.getWidth();
-		int height = Gdx.graphics.getHeight();
+		int height = Gdx.graphics.getHeight() + 130;
 		/* Consola */
 		botonConsola = new TextButton("RUN", skin);
 		consola = new TextArea("", skin);
@@ -260,7 +260,7 @@ public class PlayState implements Screen{
 			jugador.setRight(true);
 		}
 		
-		
+		jugador.setRight(true);
 	}
 	
 	public void draw(){
