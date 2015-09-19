@@ -9,8 +9,25 @@
  */
 package com.piercystudio.states;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.net.URI;
+
+import javax.script.ScriptEngine;
+
+import org.python.core.PyObject;
+import org.python.core.PyString;
+import org.python.core.PySystemState;
+import org.python.util.PythonInterpreter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -35,6 +52,8 @@ import com.piercystudio.entities.Moneda;
 import com.piercystudio.handlers.GameKey;
 import com.piercystudio.handlers.JSkin;
 import com.piercystudio.handlers.Save;
+
+import jdk.nashorn.internal.runtime.regexp.RegExp;
 
 public class PlayState implements Screen{
 	/* Gdx */
@@ -61,6 +80,7 @@ public class PlayState implements Screen{
 	/* Atributos de consola */
 	private TextButton botonConsola;
 	private TextArea consola;
+	private PythonInterpreter python;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -115,6 +135,10 @@ public class PlayState implements Screen{
 			cajasObject[i] = new Box(map);
 			cajasObject[i].setPosition(240 + (i * 95), 300);
 		}
+		
+		//  Interprete
+		python = new PythonInterpreter();
+
 	}
 
 	public void show() {
@@ -160,13 +184,46 @@ public class PlayState implements Screen{
 	}
 	
 	public void syntaxHighlight(InputEvent e, char c){
-		System.out.println(c);
 		//TODO
 	}
 	
 	public void interpretarCodigo(InputEvent event, float x, float y){
-		String codigo = consola.getText();
-		// TODO
+		new Thread(new Runnable() {
+			   @Override
+			   public void run() {
+				   String[] comandos = null;
+				   try{
+						StringWriter sw = new StringWriter();
+						InputStream is = Gdx.files.internal("Interpreter/JavaInterpreter.py").read();
+						String codigo = consola.getText();
+						python.exec("import sys");
+						python.exec("sys.argv = []");
+						python.exec("sys.argv.append('0')");
+						python.exec("sys.argv.append(\"\"\"" + codigo + "\"\"\")");
+						python.setOut(sw);
+						python.execfile(is);
+						python.close();
+						comandos = sw.toString().split("\n");						
+					}catch(Exception e){
+						Gdx.app.log(PiercyGame.TITULO, "Script Python Error");
+					}
+				   final String[] resultados = comandos;
+			      Gdx.app.postRunnable(new Runnable() {
+			         @Override
+			         public void run() {
+			            for (int i = 0; i < resultados.length; i++){
+							if (resultados[i].equals("fd")){
+								jugador.setRight(true);
+							}else if(resultados[i].equals("bc")){
+								jugador.setLeft(true);
+							}else if(resultados[i].equals("ju")){
+								jugador.setJumping(true);
+							}
+						}
+			         }
+			      });
+			   }
+			}).start();
 	}
 
 	public void render(float delta) { 
