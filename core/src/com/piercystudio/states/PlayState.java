@@ -9,25 +9,14 @@
  */
 package com.piercystudio.states;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.net.URI;
 
-import javax.script.ScriptEngine;
 
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -53,7 +42,6 @@ import com.piercystudio.handlers.GameKey;
 import com.piercystudio.handlers.JSkin;
 import com.piercystudio.handlers.Save;
 
-import jdk.nashorn.internal.runtime.regexp.RegExp;
 
 public class PlayState implements Screen{
 	/* Gdx */
@@ -149,7 +137,7 @@ public class PlayState implements Screen{
 		botonConsola = new TextButton("RUN", skin);
 		consola = new TextArea("", skin);
 		consola.setVisible(true);
-		consola.setWidth(width);
+		consola.setWidth((int)(width * 0.7));
 		consola.setHeight((int)(height * 0.2));
 		consola.setY(height - (int)(height * 0.5));
 		botonConsola.setX(width - botonConsola.getWidth());
