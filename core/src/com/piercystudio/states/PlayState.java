@@ -272,7 +272,7 @@ public class PlayState implements Screen{
 		Double epsilon = 0.888;
 		for(int i = 0; i < cajas.length; i++){
 			if(Math.abs(jugador.getX() - cajas[i].getX()) < epsilon){
-				jugador.setPosition(jugador.getX() - 10, jugador.getY());
+				jugador.setPosition(jugador.getX() + 10, jugador.getY());
 				jugador.setFalling(false);
 			}
 		}
