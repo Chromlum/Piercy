@@ -111,7 +111,7 @@ public class MenuScreen implements Screen{
 		textButton.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
-				game.setScreen(new LoadState(game));
+				game.setScreen(new LoadState(game, 1));
 			}
 			
 		});
@@ -119,7 +119,7 @@ public class MenuScreen implements Screen{
 		textButton2.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
-				game.setScreen(new PlayState(game, Save.gd.getCurrentLevel()));
+				game.setScreen(new LoadState(game, Save.gd.getCurrentLevel()));
 			}
 			
 		});
