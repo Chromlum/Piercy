@@ -39,6 +39,7 @@ public class PiercyGame extends Game {
 		res.loadImage("player", "Sprites/sprites.png");
 		res.loadImage("coin", "Sprites/coinsprite.png");
 		res.loadImage("box","Sprites/box.png");
+		res.loadImage("loadingbar", "Sprites/loadingbar.png");
 		res.loadImage("bg", "Maps/JnRLayer01.png");
 		
 		/* Mapas */
