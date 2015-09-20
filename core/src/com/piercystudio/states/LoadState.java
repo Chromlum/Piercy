@@ -9,6 +9,8 @@
  */
 package com.piercystudio.states;
 
+import org.python.util.PythonInterpreter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -32,7 +34,7 @@ public class LoadState implements Screen{
 	private Animation animation;
 	private Label loading;
 	
-	public LoadState(PiercyGame game){
+	public LoadState(final PiercyGame game){
 		
 		this.game = game;
 		camera = this.game.getCamera();
@@ -53,6 +55,21 @@ public class LoadState implements Screen{
 		/* Loading text */
 		loading = new Label("Cargando", skin);
 		loading.setVisible(true);
+		
+		new Thread(new Runnable(){
+			
+			public void run(){
+				final PythonInterpreter python = new PythonInterpreter();
+				Gdx.app.postRunnable(new Runnable(){
+					public void run(){
+						PlayState gameScreen = new PlayState(game, 1);
+						gameScreen.python = python;
+						game.setScreen(gameScreen);
+						loading.setVisible(false);
+					}
+				});
+			}
+		}).start();
 		
 	}
 	

@@ -68,7 +68,7 @@ public class PlayState implements Screen{
 	/* Atributos de consola */
 	private TextButton botonConsola;
 	private TextArea consola;
-	private PythonInterpreter python;
+	public PythonInterpreter python;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -124,9 +124,6 @@ public class PlayState implements Screen{
 			cajasObject[i].setPosition(240 + (i * 95), 300);
 		}
 		
-		//  Interprete
-		python = new PythonInterpreter();
-
 	}
 
 	public void show() {
@@ -137,10 +134,11 @@ public class PlayState implements Screen{
 		botonConsola = new TextButton("RUN", skin);
 		consola = new TextArea("", skin);
 		consola.setVisible(true);
-		consola.setWidth((int)(width * 0.7));
+		consola.setWidth((int)(width * 0.5));
 		consola.setHeight((int)(height * 0.2));
-		consola.setY(height - (int)(height * 0.5));
-		botonConsola.setX(width - botonConsola.getWidth());
+		consola.setY(height - (int)(height * 0.35));
+		botonConsola.setX(
+				consola.getX() + (consola.getWidth() - botonConsola.getWidth()));
 		botonConsola.setY(consola.getY() - botonConsola.getHeight());
 		/*         */ 
 		
@@ -290,7 +288,9 @@ public class PlayState implements Screen{
 				this.lblNivel.setVisible(false);
 				Save.gd.setCurrentLevel(currentLevel);
 				Save.save();
-				game.setScreen(new PlayState(game, currentLevel));
+				PlayState nextLvl = new PlayState(game, currentLevel);
+				nextLvl.python = this.python;
+				game.setScreen(nextLvl);
 			}
 		}
 	}
