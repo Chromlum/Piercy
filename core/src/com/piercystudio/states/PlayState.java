@@ -189,7 +189,6 @@ public class PlayState implements Screen{
 	
 	public void interpretarCodigo(InputEvent event, float x, float y){
 		new Thread(new Runnable() {
-			   @Override
 			   public void run() {
 				   String[] comandos = null;
 				   try{
@@ -209,7 +208,6 @@ public class PlayState implements Screen{
 					}
 				   final String[] resultados = comandos;
 			      Gdx.app.postRunnable(new Runnable() {
-			         @Override
 			         public void run() {
 			            for (int i = 0; i < resultados.length; i++){
 							if (resultados[i].equals("fd")){
