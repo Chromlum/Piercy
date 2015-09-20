@@ -269,9 +269,10 @@ public class PlayState implements Screen{
 	}
 	
 	public void colisionJugadorCaja(Box[] cajas){
+		Double epsilon = 0.888;
 		for(int i = 0; i < cajas.length; i++){
-			if((int)jugador.getX() == (int)cajas[i].getX() && (jugador.isFalling()==true)){
-				jugador.setPosition(jugador.getX()+10, jugador.getY());
+			if(Math.abs(jugador.getX() - cajas[i].getX()) < epsilon){
+				jugador.setPosition(jugador.getX() - 10, jugador.getY());
 				jugador.setFalling(false);
 			}
 		}
