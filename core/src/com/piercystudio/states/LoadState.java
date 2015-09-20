@@ -34,7 +34,7 @@ public class LoadState implements Screen{
 	private Animation animation;
 	private Label loading;
 	
-	public LoadState(final PiercyGame game){
+	public LoadState(final PiercyGame game, final int lvl){
 		
 		this.game = game;
 		camera = this.game.getCamera();
@@ -62,7 +62,7 @@ public class LoadState implements Screen{
 				final PythonInterpreter python = new PythonInterpreter();
 				Gdx.app.postRunnable(new Runnable(){
 					public void run(){
-						PlayState gameScreen = new PlayState(game, 1);
+						PlayState gameScreen = new PlayState(game, lvl);
 						gameScreen.python = python;
 						game.setScreen(gameScreen);
 						loading.setVisible(false);
