@@ -45,6 +45,7 @@ public class PiercyGame extends Game {
 		/* Mapas */
 		res.loadLevel(1, "Maps/map1.tmx");
 		res.loadLevel(2, "Maps/map2.tmx");
+		res.loadLevel(3, "Maps/map3.tmx");
 		
 		setScreen(new MenuScreen(this));
 		
