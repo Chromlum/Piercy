@@ -19,7 +19,7 @@ class Interprete(object):
     def movefd(self):
         print("fd")
 
-    def movebck(self, posiciones):
+    def movebck(self):
         print("bc")
 
     def jump(self):
