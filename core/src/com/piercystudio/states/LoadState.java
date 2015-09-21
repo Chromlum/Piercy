@@ -50,7 +50,7 @@ public class LoadState implements Screen{
 			sprites[i] = new TextureRegion(tex, i * 32, 0, 128, 32);
 		}
 		animation = new Animation();
-		animation.setFrames(sprites, 1 / 2f);
+		animation.setFrames(sprites, 1 / 10f);
 		
 		/* Loading text */
 		loading = new Label("Cargando", skin);
