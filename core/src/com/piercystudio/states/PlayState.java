@@ -107,13 +107,15 @@ public class PlayState implements Screen{
 		
 		/* Monedas*/
 		if(currentLevel == 1)
-			asignarMonedas = 5;
+			asignarMonedas = 1;
 		if(currentLevel == 2)
-			asignarMonedas = 5;
+			asignarMonedas = 2;
 		if(currentLevel == 3)
-			asignarMonedas = 13;
-		if(currentLevel == 4)
 			asignarMonedas = 6;
+		if(currentLevel == 4)
+			asignarMonedas = 3;
+		if(currentLevel == 5)
+			asignarMonedas = 3;
 		monedasObject = new Moneda[asignarMonedas];
 		for(int i = 0; i < monedasObject.length; i++){
 			monedasObject[i] = new Moneda(map);
@@ -121,14 +123,12 @@ public class PlayState implements Screen{
 		}
 		
 		/* Cajas */
-		if(currentLevel == 1)
-			asignarCajas = 2;
-		if(currentLevel == 2)
-			asignarCajas = 1;
+		if(currentLevel == 5)
+			asignarCajas = 0;
 		cajasObject = new Box[asignarCajas];
 		for(int i = 0; i < cajasObject.length; i++){
 			cajasObject[i] = new Box(map);
-			cajasObject[i].setPosition(240 + (i * 95), 300);
+			cajasObject[i].setPosition(130 + (i * 95), 130);
 		}
 		
 	}
@@ -257,6 +257,21 @@ public class PlayState implements Screen{
 		for(int i = 0; i < cajasObject.length; i++){
 			cajasObject[i].update(Gdx.graphics.getDeltaTime());
 		}
+		
+		if(jugador.isDead() == true){
+			jugador.setRight(false);
+			this.lblCantidadCoins.setVisible(false);
+			this.lblCurrentCoins.setVisible(false);
+			this.lblNivelText.setVisible(false);
+			this.lblNivel.setVisible(false);
+			Save.gd.setCurrentLevel(currentLevel);
+			Save.save();
+			PlayState nextLvl = new PlayState(game, currentLevel);
+			System.out.println("Nivel: "+ currentLevel);
+			nextLvl.python = this.python;
+			game.setScreen(nextLvl);
+		}
+		
 		handleInput();
 		colisionJugadorMoneda(monedasObject);
 		colisionJugadorCaja(cajasObject);
@@ -277,64 +292,55 @@ public class PlayState implements Screen{
 	}
 	
 	public void colisionJugadorCaja(Box[] cajas){
-		Double epsilon = 0.888;
+		Double epsilon = 1.0;
 		for(int i = 0; i < cajas.length; i++){
 			if(Math.abs(jugador.getX() - cajas[i].getX()) < epsilon){
-				jugador.setPosition(jugador.getX() + 10, jugador.getY());
-				jugador.setFalling(false);
+				//jugador.setPosition(jugador.getX() + 10, jugador.getY());
+				//jugador.setFalling(false);
+				jugador.setRight(false);
+				jugador.setLeft(false);
 			}
+		}
+	}
+	
+	public void sigNivelLogic(){
+		if(currentCoins == monedasObject.length){
+			jugador.setRight(false);
+			this.lblCantidadCoins.setVisible(false);
+			this.lblCurrentCoins.setVisible(false);
+			this.lblNivelText.setVisible(false);
+			this.lblNivel.setVisible(false);
+			Save.gd.setCurrentLevel(nextLevel);
+			Save.save();
+			PlayState nextLvl = new PlayState(game, nextLevel);
+			System.out.println("Nivel: "+ nextLevel);
+			nextLvl.python = this.python;
+			game.setScreen(nextLvl);
 		}
 	}
 	
 	public void sigNivel(){
 		if(currentLevel == 1){
-			if(currentCoins == monedasObject.length){
-				jugador.setRight(false);
-				this.lblCantidadCoins.setVisible(false);
-				this.lblCurrentCoins.setVisible(false);
-				this.lblNivelText.setVisible(false);
-				this.lblNivel.setVisible(false);
-				Save.gd.setCurrentLevel(nextLevel);
-				Save.save();
-				PlayState nextLvl = new PlayState(game, nextLevel);
-				System.out.println("Nivel: "+ nextLevel);
-				nextLvl.python = this.python;
-				game.setScreen(nextLvl);
-			}
+			sigNivelLogic();
 		}
-		
 		if(currentLevel == 2){
-			if(currentCoins == monedasObject.length){
-				jugador.setRight(false);
-				this.lblCantidadCoins.setVisible(false);
-				this.lblCurrentCoins.setVisible(false);
-				this.lblNivelText.setVisible(false);
-				this.lblNivel.setVisible(false);
-				Save.gd.setCurrentLevel(nextLevel);
-				Save.save();
-				PlayState nextLvl = new PlayState(game, nextLevel);
-				System.out.println("Nivel: "+ nextLevel);
-				nextLvl.python = this.python;
-				game.setScreen(nextLvl);
-			}
+			sigNivelLogic();
 		}
-		
 		if(currentLevel == 3){
-			if(currentCoins == monedasObject.length){
-				jugador.setRight(false);
-				this.lblCantidadCoins.setVisible(false);
-				this.lblCurrentCoins.setVisible(false);
-				this.lblNivelText.setVisible(false);
-				this.lblNivel.setVisible(false);
-				Save.gd.setCurrentLevel(nextLevel);
-				Save.save();
-				PlayState nextLvl = new PlayState(game, nextLevel);
-				System.out.println("Nivel: "+ nextLevel);
-				nextLvl.python = this.python;
-				game.setScreen(nextLvl);
-			}
+			sigNivelLogic();
 		}
-		
+		if(currentLevel == 4){
+			sigNivelLogic();
+		}
+		if(currentLevel == 5){
+			sigNivelLogic();
+		}
+		if(currentLevel == 6){
+			sigNivelLogic();
+		}
+		if(currentLevel == 7){
+			sigNivelLogic();
+		}
 	}
 	
 	public void handleInput(){
