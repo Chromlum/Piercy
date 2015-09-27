@@ -37,6 +37,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.piercystudio.PiercyGame;
 import com.piercystudio.entities.Box;
 import com.piercystudio.entities.Jugador;
+import com.piercystudio.entities.Jugador.Movimientos;
 import com.piercystudio.entities.Moneda;
 import com.piercystudio.handlers.GameKey;
 import com.piercystudio.handlers.JSkin;
@@ -44,6 +45,7 @@ import com.piercystudio.handlers.Save;
 
 
 public class PlayState implements Screen{
+	
 	/* Gdx */
 	private PiercyGame game;
 	private OrthographicCamera camera, fondoCam;
@@ -201,16 +203,18 @@ public class PlayState implements Screen{
 					}
 				   final String[] resultados = comandos;
 			      Gdx.app.postRunnable(new Runnable() {
-			         public void run() {
+			         public void run() {			        	 
 			            for (int i = 0; i < resultados.length; i++){
 							if (resultados[i].equals("fd")){
-								jugador.setRight(true);
-							}else if(resultados[i].equals("bc")){
-								jugador.setLeft(true);
-							}else if(resultados[i].equals("ju")){
-								jugador.setJumping(true);
+								jugador.addAction(Movimientos.DERECHA);
+							}
+							if(resultados[i].equals("bc")){
+								jugador.addAction(Movimientos.IZQUIERDA);
+							}if(resultados[i].equals("ju")){
+								jugador.addAction(Movimientos.BRINCAR);
 							}
 						}
+			            jugador.setActive(true);
 			         }
 			      });
 			   }

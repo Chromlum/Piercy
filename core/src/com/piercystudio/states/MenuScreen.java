@@ -37,7 +37,7 @@ import com.piercystudio.handlers.Save;
 
 public class MenuScreen implements Screen{
 	
-	/* Gdx */
+	/* Gdx  */
 	private PiercyGame game;
 	private Stage myStage;
 	private SpriteBatch batch;
@@ -111,7 +111,7 @@ public class MenuScreen implements Screen{
 		textButton.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
-				game.setScreen(new LoadState(game, 1));
+				game.setScreen(new LevelSelectState(game));
 			}
 			
 		});
@@ -132,9 +132,7 @@ public class MenuScreen implements Screen{
 			}
 			
 		});
-		
-		
-		
+
 	}
 
 	public void show() { }
@@ -145,8 +143,7 @@ public class MenuScreen implements Screen{
 		this.myStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		this.myStage.draw();
 		draw();
-		
-		
+
 	}
 	
 	public void draw(){
