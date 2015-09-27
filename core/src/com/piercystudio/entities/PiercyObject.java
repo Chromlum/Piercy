@@ -1,7 +1,7 @@
 /*
  * PiercyObject.java
  * 
- * @author: G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo
  * 16/09/15
  * 
  * Entidad madre de los objetos en el juego.

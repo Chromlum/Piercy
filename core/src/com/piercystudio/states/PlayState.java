@@ -1,7 +1,7 @@
 /*
  * PlayState.java
  * 
- * @author: G. Brolo
+ * @author: J. Custodio, G. Brolo
  * 16/09/15
  * 
  * Estado destinado a poder jugar. Es en este estado en donde se juega.

@@ -1,7 +1,7 @@
 /*
  * Jugador.java
  * 
- * @author: G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo
  * 16/09/15
  * 
  * Crea al jugador principal.
