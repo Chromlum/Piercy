@@ -72,6 +72,7 @@ public class PlayState implements Screen{
 	private TextButton botonConsola;
 	private TextArea consola;
 	public PythonInterpreter python;
+	private String bufferError;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -203,7 +204,8 @@ public class PlayState implements Screen{
 					}
 				   final String[] resultados = comandos;
 			      Gdx.app.postRunnable(new Runnable() {
-			         public void run() {			        	 
+			         public void run() {
+			        	bufferError = "";
 			            for (int i = 0; i < resultados.length; i++){
 							if (resultados[i].equals("fd")){
 								jugador.addAction(Movimientos.DERECHA);
@@ -212,9 +214,15 @@ public class PlayState implements Screen{
 								jugador.addAction(Movimientos.IZQUIERDA);
 							}if(resultados[i].equals("ju")){
 								jugador.addAction(Movimientos.BRINCAR);
+							}else{
+								bufferError += resultados[i];
 							}
 						}
-			            jugador.setActive(true);
+			            if(bufferError != "")
+			            	jugador.setActive(true);
+			            else{
+			            	//TODO
+			            }
 			         }
 			      });
 			   }
