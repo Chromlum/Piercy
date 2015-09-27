@@ -1,7 +1,8 @@
+
 /*
  * PlayState.java
  * 
- * @author: G. Brolo
+ * @author: J. Custodio, G. Brolo
  * 16/09/15
  * 
  * Estado destinado a poder jugar. Es en este estado en donde se juega.
@@ -72,7 +73,6 @@ public class PlayState implements Screen{
 	private TextButton botonConsola;
 	private TextArea consola;
 	public PythonInterpreter python;
-	private String bufferError;
 	
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
@@ -204,8 +204,7 @@ public class PlayState implements Screen{
 					}
 				   final String[] resultados = comandos;
 			      Gdx.app.postRunnable(new Runnable() {
-			         public void run() {
-			        	bufferError = "";
+			         public void run() {			        	 
 			            for (int i = 0; i < resultados.length; i++){
 							if (resultados[i].equals("fd")){
 								jugador.addAction(Movimientos.DERECHA);
@@ -214,15 +213,9 @@ public class PlayState implements Screen{
 								jugador.addAction(Movimientos.IZQUIERDA);
 							}if(resultados[i].equals("ju")){
 								jugador.addAction(Movimientos.BRINCAR);
-							}else{
-								bufferError += resultados[i];
 							}
 						}
-			            if(bufferError != "")
-			            	jugador.setActive(true);
-			            else{
-			            	//TODO
-			            }
+			            jugador.setActive(true);
 			         }
 			      });
 			   }

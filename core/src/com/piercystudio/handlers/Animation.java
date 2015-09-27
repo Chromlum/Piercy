@@ -1,3 +1,12 @@
+/*
+ * Animation.java
+ * 
+ * @author: E. Mendoza, J. Custodio, G. Brolo
+ * 16/09/15
+ * 
+ * Corre los frames en un sprite para crear una animacion a partir de una imagen.
+ * 
+ */
 package com.piercystudio.handlers;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

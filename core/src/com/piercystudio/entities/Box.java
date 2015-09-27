@@ -1,3 +1,12 @@
+/*
+ * Box.java
+ * 
+ * @author: E. Mendoza, J. Custodio, G. Brolo
+ * 16/09/15
+ * 
+ * Crea una caja.
+ * 
+ */
 package com.piercystudio.entities;
 
 import com.badlogic.gdx.graphics.Texture;
