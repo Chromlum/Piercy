@@ -59,6 +59,7 @@ public class LoadState implements Screen{
 		new Thread(new Runnable(){
 			
 			public void run(){
+				@SuppressWarnings("resource")
 				final PythonInterpreter python = new PythonInterpreter();
 				Gdx.app.postRunnable(new Runnable(){
 					public void run(){

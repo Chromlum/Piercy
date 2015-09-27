@@ -1,3 +1,12 @@
+/*
+ * Moneda.java
+ * 
+ * @author: E. Mendoza, J. Custodio, G. Brolo
+ * 16/09/15
+ * 
+ * Crea una moneda.
+ * 
+ */
 package com.piercystudio.entities;
 
 import com.badlogic.gdx.graphics.Texture;

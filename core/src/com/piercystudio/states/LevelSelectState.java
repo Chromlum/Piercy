@@ -1,3 +1,13 @@
+/*
+ * LevelSelectState.java
+ * 
+ * @author: Eric Mendoza
+ * 16/09/15
+ * 
+ * Crea un menu para elegir los niveles del juego.
+ * Permite elegir el nivel y envia al jugador al mismo.
+ * 
+ */
 package com.piercystudio.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -41,7 +51,7 @@ public class LevelSelectState implements Screen{
         Texture textura = PiercyGame.res.getImage("logoMenu");
         logo = new TextureRegion(textura, 300, 150);
 
-		/* Inicia mágia */
+		/* Inicia mï¿½gia */
         skin = new Skin();
 
         Pixmap pixmap = new Pixmap(70, 70, Format.RGBA8888);
