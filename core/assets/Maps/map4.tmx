@@ -110,7 +110,7 @@
  <tileset firstgid="105" name="message1" tilewidth="32" tileheight="32" tilecount="6">
   <image source="message1W4.png" width="97" height="80"/>
  </tileset>
- <tileset firstgid="111" name="message2" tilewidth="32" tileheight="32" tilecount="35">
+ <tileset firstgid="111" name="Message2" tilewidth="32" tileheight="32" tilecount="35">
   <image source="message2W4.png" width="224" height="160"/>
  </tileset>
  <layer name="Capa de Patrones 1" width="50" height="50">

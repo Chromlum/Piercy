@@ -115,7 +115,7 @@ public class LevelSelectState implements Screen{
         final TextButton textButton6 = new TextButton("6", textButtonStyle);
         textButton6.setPosition(530, PiercyGame.HEIGHT / 2 - 70);
         textButton6.addListener(levelListener);
-        myStage.addActor(textButton6);
+        //myStage.addActor(textButton6);
 
 
     }
