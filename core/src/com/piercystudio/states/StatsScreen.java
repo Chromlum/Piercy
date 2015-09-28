@@ -25,39 +25,31 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.piercystudio.PiercyGame;
+import com.piercystudio.handlers.JSkin;
 import com.piercystudio.handlers.Save;
 
-public class MenuScreen implements Screen{
+public class StatsScreen implements Screen{
 	
 	/* Gdx  */
 	private PiercyGame game;
 	private Stage myStage;
 	private SpriteBatch batch;
 	private Skin skin;
+	private JSkin lblSkin;
 	private TextureRegion logo;
+	private Label lvlTitle, lvl, errTitle, err, lblResultado;
 	
-	public MenuScreen(PiercyGame game){
+	public StatsScreen(PiercyGame game){
 		
-		/* Cargar / crear savefile */
-		
-		Save.load();
-		if(Save.gd.getCurrentLevel() == 0){
-			Save.gd.init();
-		}
-	
 		create();
 		this.game = game;
-		
-		PiercyGame.res.getMusic("bgmusic").setLooping(true);
-		PiercyGame.res.getMusic("bgmusic").play();
 		
 	}
 	
@@ -71,6 +63,7 @@ public class MenuScreen implements Screen{
 		logo = new TextureRegion(textura, 300, 150);
 		
 		/* Comienza creacion y colocacion de botones */
+		lblSkin = new JSkin();
 		skin = new Skin();
 		
 		Pixmap pixmap = new Pixmap(150, 50, Format.RGBA8888);
@@ -92,63 +85,50 @@ public class MenuScreen implements Screen{
 		
 		skin.add("default", textButtonStyle);
 		
-		final TextButton textButton = new TextButton("JUEGO NUEVO", textButtonStyle);
-		textButton.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2 + 50);
+		final TextButton textButton = new TextButton("REGRESAR", textButtonStyle);
+		textButton.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2 - 100);
 		myStage.addActor(textButton);
 		
-		final TextButton textButton2 = new TextButton("CONTINUAR", textButtonStyle);
-		textButton2.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2);
-		myStage.addActor(textButton2);
 		
-		final TextButton textButton3 = new TextButton("ESTADISTICAS", textButtonStyle);
-		textButton3.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2 - 50);
-		myStage.addActor(textButton3);
+		lvlTitle = new Label("Nivel actual: ", lblSkin);
+		lvlTitle.setVisible(true);
 		
-		final TextButton textButton4 = new TextButton("SALIR", textButtonStyle);
-		textButton4.setPosition(PiercyGame.WIDTH / 2 + 80, PiercyGame.HEIGHT / 2 - 100);
-		myStage.addActor(textButton4);
+		lvl = new Label(String.valueOf(Save.gd.getCurrentLevel()), lblSkin);
+		lvl.setVisible(true);
+		
+		errTitle = new Label("Errores cometidos: ", lblSkin);
+		errTitle.setVisible(true);
+		
+		err = new Label(String.valueOf(Save.gd.getError()), lblSkin);
+		err.setVisible(true);
+		
+		lblResultado = new Label(Save.gd.getResultado(), lblSkin);
+		lblResultado.setVisible(true);
+
 		
 		/* Listeners de botones */
 		
 		textButton.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
-				game.setScreen(new LevelSelectState(game));
+				lvlTitle.setVisible(false);
+				lvl.setVisible(false);
+				errTitle.setVisible(false);
+				err.setVisible(false);
+				lblResultado.setVisible(false);
+				
+				game.setScreen(new MenuScreen(game));
 			}
 			
 		});
 		
-		textButton2.addListener(new ChangeListener(){
-			
-			public void changed (ChangeEvent event, Actor actor){
-				game.setScreen(new LoadState(game, Save.gd.getCurrentLevel()));
-			}
-			
-		});
-		
-		textButton3.addListener(new ChangeListener(){
-			
-			public void changed (ChangeEvent event, Actor actor){
-				game.setScreen(new StatsScreen(game));
-			}
-			
-		});
-		
-		textButton4.addListener(new ClickListener(){
-			
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				Gdx.app.exit();
-				super.touchUp(event, x, y, pointer, button);
-			}
-			
-		});
 
 	}
 
 	public void show() { }
 
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.myStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		this.myStage.draw();
@@ -160,6 +140,25 @@ public class MenuScreen implements Screen{
 		batch.begin();
 		batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
 		batch.end();
+		this.lvlTitle.setX(PiercyGame.WIDTH / 2 - 0 );
+		this.lvlTitle.setY(PiercyGame.HEIGHT / 2  + 100);
+		this.game.getMyStage().addActor(lvlTitle);
+		
+		this.lvl.setX(PiercyGame.WIDTH / 2 + 300 );
+		this.lvl.setY(PiercyGame.HEIGHT / 2 + 100 );
+		this.game.getMyStage().addActor(lvl);
+		
+		this.errTitle.setX(PiercyGame.WIDTH / 2 - 110 );
+		this.errTitle.setY(PiercyGame.HEIGHT / 2  + 30);
+		this.game.getMyStage().addActor(errTitle);
+		
+		this.err.setX(PiercyGame.WIDTH / 2 + 300 );
+		this.err.setY(PiercyGame.HEIGHT / 2  + 30);
+		this.game.getMyStage().addActor(err);
+		
+		this.lblResultado.setX(PiercyGame.WIDTH / 2 - 50 );
+		this.lblResultado.setY(PiercyGame.HEIGHT / 2  - 20);
+		this.game.getMyStage().addActor(lblResultado);
 	}
 	
 	public void resize(int width, int height) { }
@@ -175,7 +174,8 @@ public class MenuScreen implements Screen{
 		myStage.dispose();
 		logo.getTexture().dispose();
 		skin.dispose();
-		batch.dispose();		
+		batch.dispose();
+		lblSkin.dispose();
 	}
 	
 	
