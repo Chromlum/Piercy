@@ -25,7 +25,8 @@ public class Jugador extends PiercyObject{
 		IZQUIERDA,
 		BRINCAR,
 		DESTRUIR,
-		NUMEROCAJA
+		BRINCARD,
+		BRINCARI
 	}
 	private double distanciaAcumulada;
 	private Queue<Movimientos> actionQueue;

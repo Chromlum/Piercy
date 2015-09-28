@@ -1,3 +1,9 @@
+#  JavaInterpreter.py
+#  Autores: Custodio, R.; Mendoza, E; Brolo, G y Rosales, J.
+#  Fecha: 15/09/2015
+#  Descripcion: Interprete que recibe argumentos del sistema provenientes
+#  de java y luego los imprime para asi obtener el buffer y ejecutarlo en java
+
 import sys
 class Interprete(object):
     resultado = ""
@@ -27,6 +33,12 @@ class Interprete(object):
 
     def boxDispose(self, number):
         print("di" + number)
+
+    def jumpfd(self):
+        print("jfd")
+
+    def jumpbck(self):
+        print("jbc")
 
 def main():
     interprete = Interprete()
