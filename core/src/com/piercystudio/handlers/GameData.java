@@ -19,6 +19,7 @@ public class GameData implements Serializable{
 	
 	public int currentLevel = 0;
 	public int exp;
+	public int errores;
 	
 	public GameData(){
 		firstRun = true;

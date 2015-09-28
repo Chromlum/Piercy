@@ -208,15 +208,21 @@ public class PlayState implements Screen{
 			            for (int i = 0; i < resultados.length; i++){
 							if (resultados[i].equals("fd")){
 								jugador.addAction(Movimientos.DERECHA);
-							}
+							}else
 							if(resultados[i].equals("bc")){
 								jugador.addAction(Movimientos.IZQUIERDA);
-							}if(resultados[i].equals("ju")){
+							}else
+							if(resultados[i].equals("ju")){
 								jugador.addAction(Movimientos.BRINCAR);
-							}if(resultados[i].equals("jfd")){
+							}else
+							if(resultados[i].equals("jfd")){
 								jugador.addAction(Movimientos.BRINCARD);
-							}if(resultados[i].equals("jbc")){
+							}else
+							if(resultados[i].equals("jbc")){
 								jugador.addAction(Movimientos.BRINCARI);
+							}else{
+								// TODO AQUI MARCA LOS ERRORES
+								System.out.println(resultados[i]);
 							}
 						}
 			            jugador.setActive(true);
