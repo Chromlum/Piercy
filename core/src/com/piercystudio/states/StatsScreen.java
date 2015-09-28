@@ -44,7 +44,7 @@ public class StatsScreen implements Screen{
 	private Skin skin;
 	private JSkin lblSkin;
 	private TextureRegion logo;
-	private Label lvlTitle, lvl, errTitle, err;
+	private Label lvlTitle, lvl, errTitle, err, lblResultado;
 	
 	public StatsScreen(PiercyGame game){
 		
@@ -98,6 +98,12 @@ public class StatsScreen implements Screen{
 		
 		errTitle = new Label("Errores cometidos: ", lblSkin);
 		errTitle.setVisible(true);
+		
+		err = new Label(String.valueOf(Save.gd.getError()), lblSkin);
+		err.setVisible(true);
+		
+		lblResultado = new Label(Save.gd.getResultado(), lblSkin);
+		lblResultado.setVisible(true);
 
 		
 		/* Listeners de botones */
@@ -105,6 +111,12 @@ public class StatsScreen implements Screen{
 		textButton.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
+				lvlTitle.setVisible(false);
+				lvl.setVisible(false);
+				errTitle.setVisible(false);
+				err.setVisible(false);
+				lblResultado.setVisible(false);
+				
 				game.setScreen(new MenuScreen(game));
 			}
 			
@@ -139,6 +151,14 @@ public class StatsScreen implements Screen{
 		this.errTitle.setX(PiercyGame.WIDTH / 2 - 110 );
 		this.errTitle.setY(PiercyGame.HEIGHT / 2  + 30);
 		this.game.getMyStage().addActor(errTitle);
+		
+		this.err.setX(PiercyGame.WIDTH / 2 + 300 );
+		this.err.setY(PiercyGame.HEIGHT / 2  + 30);
+		this.game.getMyStage().addActor(err);
+		
+		this.lblResultado.setX(PiercyGame.WIDTH / 2 - 50 );
+		this.lblResultado.setY(PiercyGame.HEIGHT / 2  - 20);
+		this.game.getMyStage().addActor(lblResultado);
 	}
 	
 	public void resize(int width, int height) { }
@@ -154,7 +174,8 @@ public class StatsScreen implements Screen{
 		myStage.dispose();
 		logo.getTexture().dispose();
 		skin.dispose();
-		batch.dispose();		
+		batch.dispose();
+		lblSkin.dispose();
 	}
 	
 	

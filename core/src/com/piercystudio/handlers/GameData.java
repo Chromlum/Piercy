@@ -20,6 +20,7 @@ public class GameData implements Serializable{
 	public int currentLevel = 0;
 	public int exp;
 	public int errores;
+	public String resultado;
 	
 	public GameData(){
 		firstRun = true;
@@ -30,6 +31,7 @@ public class GameData implements Serializable{
 		/* Empezar juego en primer nivel */
 		currentLevel = 1;
 		exp = 0;
+		errores = 0;
 	}
 	
 	public int getCurrentLevel(){
@@ -44,6 +46,31 @@ public class GameData implements Serializable{
 		return firstRun;
 	}
 	
+	public void addError(){
+		errores += 1;
+	}
 	
+	public int getError(){
+		return this.errores;
+	}
+	
+	public void setExp(int exp){
+		this.exp += exp;
+	}
+	
+	public int getExp(){
+		return this.exp;
+	}
+	
+	public String getResultado(){
+		if(exp > errores){
+			resultado = "Buen trabajo.";
+		}else if(errores > exp){
+			resultado = "Necesita practicar.";
+		}else if(exp == errores){
+			resultado = "No hay progreso.";
+		}
+		return resultado;
+	}
 
 }
