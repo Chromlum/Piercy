@@ -292,6 +292,7 @@ public class PlayState implements Screen{
 				monedas[i].setPosition(500, 1500);
 				currentCoins += 1;
 				lblCantidadCoins.setText(String.valueOf(currentCoins));
+				PiercyGame.res.getSound("coin").play();
 			}
 		}
 	}
