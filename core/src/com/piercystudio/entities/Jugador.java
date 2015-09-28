@@ -88,6 +88,14 @@ public class Jugador extends PiercyObject{
 						case DERECHA: this.setRight(true);break;
 						case IZQUIERDA: this.setLeft(true);break;
 						case BRINCAR: this.setJumping(true);break;
+						case BRINCARD:{
+							this.setRight(true);
+							this.setJumping(true);
+						}break;
+						case BRINCARI:{
+							this.setLeft(true);
+							this.setJumping(true);
+						}break;
 					}
 					hasFinished = false;
 				}else{ 

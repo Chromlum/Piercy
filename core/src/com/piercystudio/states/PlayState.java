@@ -213,6 +213,10 @@ public class PlayState implements Screen{
 								jugador.addAction(Movimientos.IZQUIERDA);
 							}if(resultados[i].equals("ju")){
 								jugador.addAction(Movimientos.BRINCAR);
+							}if(resultados[i].equals("jfd")){
+								jugador.addAction(Movimientos.BRINCARD);
+							}if(resultados[i].equals("jbc")){
+								jugador.addAction(Movimientos.BRINCARI);
 							}
 						}
 			            jugador.setActive(true);
