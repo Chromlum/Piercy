@@ -52,6 +52,7 @@ public class PiercyGame extends Game {
 		
 		/* Musica */
 		res.loadMusic("bgmusic", "Music/bgmusic.mp3");
+		res.loadSound("coin", "Music/coin.mp3");
 		
 		setScreen(new MenuScreen(this));
 		
