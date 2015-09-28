@@ -10,7 +10,6 @@
 package com.piercystudio.entities;
 
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -104,7 +103,7 @@ public class Jugador extends PiercyObject{
 			if (dx > maxSpeed) {
 				dx = maxSpeed;
 			}
-			if (distanciaAcumulada > 50){
+			if (distanciaAcumulada > 32){
 				Right = false;
 				hasFinished = true;
 				distanciaAcumulada = 0;
@@ -116,7 +115,7 @@ public class Jugador extends PiercyObject{
 			if (dx < -maxSpeed) {
 				dx = -maxSpeed;
 			}
-			if (distanciaAcumulada > 50){
+			if (distanciaAcumulada > 32){
 				Left = false;
 				hasFinished = true;
 				distanciaAcumulada = 0;

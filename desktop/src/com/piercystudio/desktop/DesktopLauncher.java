@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.vSyncEnabled = true;
 		config.width = 800;
 		config.height = 480;
-		
+		config.resizable = false;
 		new LwjglApplication(new PiercyGame(), config);
 	}
 }
