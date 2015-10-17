@@ -309,8 +309,9 @@ public class PlayState implements Screen{
 	
 	public void colisionJugadorMoneda(Moneda[] monedas){
 		//Double epsilon = 0.888;
+		Double epsilon = 1.0;
 		for(int i = 0; i < monedas.length; i ++){
-			if(((int)jugador.getX() == monedas[i].getX())){
+			if((monedas[i].getX() - jugador.getX()) < epsilon && (monedas[i].getY() - jugador.getY()) < epsilon){
 				monedas[i].setPosition(500, 1500);
 				currentCoins += 1;
 				lblCantidadCoins.setText(String.valueOf(currentCoins));
