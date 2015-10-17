@@ -96,6 +96,8 @@ public class Jugador extends PiercyObject{
 							this.setLeft(true);
 							this.setJumping(true);
 						}break;
+					default:
+						break;
 					}
 					hasFinished = false;
 				}else{ 

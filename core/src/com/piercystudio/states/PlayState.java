@@ -308,7 +308,7 @@ public class PlayState implements Screen{
 	}
 	
 	public void colisionJugadorMoneda(Moneda[] monedas){
-		Double epsilon = 0.888;
+		//Double epsilon = 0.888;
 		for(int i = 0; i < monedas.length; i ++){
 			if(((int)jugador.getX() == monedas[i].getX())){
 				monedas[i].setPosition(500, 1500);
