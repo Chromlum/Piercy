@@ -36,16 +36,16 @@ public class LevelSelectState implements Screen{
     private TextureRegion logo;
     private int world;
 
-    public LevelSelectState(PiercyGame game, int world){
-        this.world = world;
-        create();
-        this.game = game;
 
+    public LevelSelectState(PiercyGame game){
+        this.game = game;
+        batch = game.getBatch();
+        myStage = game.getMyStage();
     }
 
-    public void create(){
-        batch = new SpriteBatch();
-        myStage = new Stage();
+    @Override
+    public void show(){
+
         Gdx.input.setInputProcessor(myStage);
 
         Texture textura = PiercyGame.res.getImage("logoMenu");
@@ -146,11 +146,7 @@ public class LevelSelectState implements Screen{
                 game.setScreen(new LoadState(game, Integer.parseInt(level)));
             }
         }
-
-    @Override
-    public void show() {
-
-    }
+    
 
     @Override
     public void resume() {
@@ -168,14 +164,11 @@ public class LevelSelectState implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.myStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         this.myStage.draw();
-        draw();
-    }
-
-    private void draw() {
         batch.begin();
         batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
         batch.end();
     }
+
 
     @Override
     public void pause() {
@@ -189,9 +182,8 @@ public class LevelSelectState implements Screen{
 
     @Override
     public void dispose() {
-        myStage.dispose();
         logo.getTexture().dispose();
         skin.dispose();
-        batch.dispose();
+        myStage.clear();
     }
 }

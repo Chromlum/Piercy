@@ -112,6 +112,9 @@ public class LoadState implements Screen{
 	
 	public void resume(){}
 	
-	public void dispose(){}
+	public void dispose(){
+		skin.dispose();
+		this.myStage.clear();
+	}
 
 }

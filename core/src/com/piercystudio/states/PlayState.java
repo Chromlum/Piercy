@@ -50,8 +50,8 @@ public class PlayState implements Screen{
 	
 	/* Gdx */
 	private PiercyGame game;
-	private OrthographicCamera camera, fondoCam;
-	private SpriteBatch batch, fondo;
+	private OrthographicCamera camera, fondoCamera;
+	private SpriteBatch batch;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private Skin skin;
@@ -82,12 +82,11 @@ public class PlayState implements Screen{
 		myStage = this.game.getMyStage();
 		Gdx.input.setInputProcessor(myStage);
 		camera = this.game.getCamera();
-		fondoCam = new OrthographicCamera();
-		fondoCam.setToOrtho(false, PiercyGame.WIDTH, PiercyGame.HEIGHT);
+		fondoCamera = new OrthographicCamera();
+		fondoCamera.setToOrtho(false, PiercyGame.WIDTH, PiercyGame.HEIGHT);
 		Texture tex = PiercyGame.res.getImage("bg");
 		bg = new TextureRegion(tex, 400, 240);
 		batch = this.game.getBatch();
-		fondo = new SpriteBatch();
 		Gdx.input.setInputProcessor(myStage);
 		skin = new Skin();
 		labelSkin = new JSkin();
@@ -277,8 +276,6 @@ public class PlayState implements Screen{
 	}
 	
 	public void update(){
-		batch.setProjectionMatrix(camera.combined);
-		fondo.setProjectionMatrix(fondoCam.combined);
 		jugador.update(Gdx.graphics.getDeltaTime());
 		for(int i = 0; i < monedasObject.size(); i++){
 			monedasObject.get(i).update(Gdx.graphics.getDeltaTime());
@@ -385,9 +382,11 @@ public class PlayState implements Screen{
 	}
 	
 	public void draw(){
-		fondo.begin();
-		fondo.draw(bg, 0, 0, 600, 480);
-		fondo.end();
+		batch.setProjectionMatrix(fondoCamera.combined);
+		batch.begin();
+		batch.draw(bg, 0, 0, 600, 480);
+		batch.end();
+		batch.setProjectionMatrix(camera.combined);
 		renderer.setView(camera);
 		renderer.render();
 		
@@ -426,8 +425,7 @@ public class PlayState implements Screen{
 
 	public void hide() { }
 
-	public void dispose() { 
-		myStage.dispose();
+	public void dispose() {
 		skin.dispose();
 		labelSkin.dispose();
 	}
