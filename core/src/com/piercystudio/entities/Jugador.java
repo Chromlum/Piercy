@@ -35,8 +35,8 @@ public class Jugador extends PiercyObject{
 	public Jugador(TiledMap map) {
 		super(map);
 		facingRight = true;
-		width = height = 42;
-		cwidth = cheight = 40;
+		width = height = 50;
+		cwidth = cheight = 45;
 		fallSpeed = 0.10;
 		moveSpeed = 0.08;
 		maxSpeed = 1.7;
@@ -114,7 +114,7 @@ public class Jugador extends PiercyObject{
 			if (dx > maxSpeed) {
 				dx = maxSpeed;
 			}
-			if (distanciaAcumulada > 32){
+			if (distanciaAcumulada > 32 || getColisionX()){
 				Right = false;
 				hasFinished = true;
 				distanciaAcumulada = 0;
@@ -126,7 +126,7 @@ public class Jugador extends PiercyObject{
 			if (dx < -maxSpeed) {
 				dx = -maxSpeed;
 			}
-			if (distanciaAcumulada > 32){
+			if (distanciaAcumulada > 32 || getColisionX()){
 				Left = false;
 				hasFinished = true;
 				distanciaAcumulada = 0;
