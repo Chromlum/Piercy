@@ -4,7 +4,7 @@
  * @author: Eric Mendoza
  * 16/09/15
  * 
- * Crea un menu para elegir los niveles del juego.
+ * Crea un menu para elegir el capitulo del juego.
  * Permite elegir el nivel y envia al jugador al mismo.
  * 
  */
@@ -28,35 +28,30 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.piercystudio.PiercyGame;
 
 
-public class LevelSelectState implements Screen{
+public class WorldSelectState implements Screen{
     private PiercyGame game;
     private Stage myStage;
     private SpriteBatch batch;
     private Skin skin, skin2;
     private TextureRegion logo;
-    private int world;
 
-    public LevelSelectState(PiercyGame game, int world){
-        this.world = world;
+    public WorldSelectState(PiercyGame game){
+        create();
         this.game = game;
-        batch = game.getBatch();
-        myStage = game.getMyStage();
     }
 
-
-
-    @Override
-    public void show(){
-
+    public void create(){
+        batch = new SpriteBatch();
+        myStage = new Stage();
         Gdx.input.setInputProcessor(myStage);
 
         Texture textura = PiercyGame.res.getImage("logoMenu");
         logo = new TextureRegion(textura, 300, 150);
 
-		/* Inicia m�gia */
+		/* Inicia m?gia */
         skin = new Skin();
 
-        Pixmap pixmap = new Pixmap(70, 70, Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(100, 200, Format.RGBA8888);
         pixmap.setColor(Color.MAROON);
         pixmap.fill();
 
@@ -78,36 +73,25 @@ public class LevelSelectState implements Screen{
 
 
         /* Creacion de botones nivel */
-        final TextButton textButton = new TextButton(Integer.toString(world) + ".1", textButtonStyle);
-        textButton.setPosition(200, PiercyGame.HEIGHT / 2 + 50);
+        final TextButton textButton = new TextButton("Introduccion", textButtonStyle);
+        textButton.setPosition(134, PiercyGame.HEIGHT / 2 - 75);
         textButton.addListener(new levelListener());
         myStage.addActor(textButton);
 
-        final TextButton textButton2 = new TextButton(Integer.toString(world) + ".2", textButtonStyle);
-        textButton2.setPosition(400 - 35, PiercyGame.HEIGHT / 2 + 50);
+        final TextButton textButton2 = new TextButton("Variables", textButtonStyle);
+        textButton2.setPosition(278, PiercyGame.HEIGHT / 2 - 75);
         textButton2.addListener(new levelListener());
         myStage.addActor(textButton2);
 
-
-        final TextButton textButton3 = new TextButton(Integer.toString(world) + ".3", textButtonStyle);
-        textButton3.setPosition(530, PiercyGame.HEIGHT / 2 + 50);
+        final TextButton textButton3 = new TextButton("Condiciones", textButtonStyle);
+        textButton3.setPosition(422, PiercyGame.HEIGHT / 2 - 75);
         textButton3.addListener(new levelListener());
         myStage.addActor(textButton3);
 
-        final TextButton textButton4 = new TextButton(Integer.toString(world) + ".4", textButtonStyle);
-        textButton4.setPosition(200, PiercyGame.HEIGHT / 2 - 70);
+        final TextButton textButton4 = new TextButton("Ciclos", textButtonStyle);
+        textButton4.setPosition(566, PiercyGame.HEIGHT / 2 - 75);
         textButton4.addListener(new levelListener());
         myStage.addActor(textButton4);
-
-        final TextButton textButton5 = new TextButton(Integer.toString(world) + ".5", textButtonStyle);
-        textButton5.setPosition(400 - 35, PiercyGame.HEIGHT / 2 - 70);
-        textButton5.addListener(new levelListener());
-        myStage.addActor(textButton5);
-
-        final TextButton textButton6 = new TextButton(Integer.toString(world)  + ".6", textButtonStyle);
-        textButton6.setPosition(530, PiercyGame.HEIGHT / 2 - 70);
-        textButton6.addListener(new levelListener());
-        myStage.addActor(textButton6);
 
         /* Boton de regreso */
         skin2 = new Skin();
@@ -136,27 +120,41 @@ public class LevelSelectState implements Screen{
         backButton.setPosition(30, 400);
         backButton.addListener(new backListener());
         myStage.addActor(backButton);
-
-
     }
 
     /* Listener de botones */
     private class levelListener extends ChangeListener{
         public void changed(ChangeEvent event, Actor actor) {
             TextButton sourceButton = (TextButton) event.getTarget();
-            int level = Integer.parseInt(sourceButton.getLabel().getText().toString().substring(2,3));
-            level = (world - 1) * 6 + level;
-            game.setScreen(new LoadState(game, level));
+            String text = sourceButton.getLabel().getText().toString();
+            int world;
+
+            if (text.equals("Introduccion")){
+                world = 1;
+            } else if (text.equals("Variables")){
+                world = 2;
+            } else if (text.equals("Condiciones")){
+                world = 3;
+            } else if (text.equals("Ciclos")){
+                world = 4;
+            } else {
+                world = 1;
+            }
+
+            game.setScreen(new LevelSelectState(game, world));
         }
     }
 
     private class backListener extends ChangeListener{
         public void changed(ChangeEvent event, Actor actor) {
-            game.setScreen(new WorldSelectState(game));
+            game.setScreen(new MenuScreen(game));
         }
     }
 
+    @Override
+    public void show() {
 
+    }
 
     @Override
     public void resume() {
@@ -174,11 +172,14 @@ public class LevelSelectState implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.myStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         this.myStage.draw();
+        draw();
+    }
+
+    private void draw() {
         batch.begin();
         batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
         batch.end();
     }
-
 
     @Override
     public void pause() {
@@ -192,7 +193,7 @@ public class LevelSelectState implements Screen{
 
     @Override
     public void dispose() {
-        skin.dispose();
         myStage.clear();
+        skin.dispose();
     }
 }
