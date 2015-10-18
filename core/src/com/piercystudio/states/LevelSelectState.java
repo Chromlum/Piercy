@@ -36,12 +36,14 @@ public class LevelSelectState implements Screen{
     private TextureRegion logo;
     private int world;
 
-
-    public LevelSelectState(PiercyGame game){
+    public LevelSelectState(PiercyGame game, int world){
+        this.world = world;
         this.game = game;
         batch = game.getBatch();
         myStage = game.getMyStage();
     }
+
+
 
     @Override
     public void show(){
@@ -110,7 +112,7 @@ public class LevelSelectState implements Screen{
         /* Boton de regreso */
         skin2 = new Skin();
 
-        Pixmap pixmap2 = new Pixmap(140, 70, Format.RGBA8888);
+        Pixmap pixmap2 = new Pixmap(140, 50, Format.RGBA8888);
         pixmap2.setColor(Color.MAROON);
         pixmap2.fill();
 
@@ -118,35 +120,43 @@ public class LevelSelectState implements Screen{
         skin2.add("white", new Texture(pixmap2));
 
         BitmapFont bfont2 = new BitmapFont();
-        skin.add("default", bfont2);
+        skin2.add("default", bfont2);
 
         TextButtonStyle backButtonStyle = new TextButtonStyle();
-        backButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-        backButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-        backButtonStyle.checked = skin.newDrawable("white", Color.CLEAR);
-        backButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+        backButtonStyle.up = skin2.newDrawable("white", Color.DARK_GRAY);
+        backButtonStyle.down = skin2.newDrawable("white", Color.DARK_GRAY);
+        backButtonStyle.checked = skin2.newDrawable("white", Color.CLEAR);
+        backButtonStyle.over = skin2.newDrawable("white", Color.LIGHT_GRAY);
 
-        backButtonStyle.font = skin.getFont("default");
+        backButtonStyle.font = skin2.getFont("default");
 
-        skin.add("default", backButtonStyle);
+        skin2.add("default", backButtonStyle);
 
         final TextButton backButton = new TextButton("Regresar", backButtonStyle);
-        backButton.setPosition(200, 0);
-        backButton.addListener(new levelListener());
+        backButton.setPosition(30, 400);
+        backButton.addListener(new backListener());
         myStage.addActor(backButton);
 
 
     }
 
-        /* Listener de botones */
-        private class levelListener extends ChangeListener{
-            public void changed(ChangeEvent event, Actor actor) {
-                TextButton sourceButton = (TextButton) event.getTarget();
-                String level = sourceButton.getLabel().getText().toString();
-                game.setScreen(new LoadState(game, Integer.parseInt(level)));
-            }
+    /* Listener de botones */
+    private class levelListener extends ChangeListener{
+        public void changed(ChangeEvent event, Actor actor) {
+            TextButton sourceButton = (TextButton) event.getTarget();
+            int level = Integer.parseInt(sourceButton.getLabel().getText().toString().substring(2,3));
+            level = (world - 1) * 6 + level;
+            game.setScreen(new LoadState(game, level));
         }
-    
+    }
+
+    private class backListener extends ChangeListener{
+        public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(new WorldSelectState(game));
+        }
+    }
+
+
 
     @Override
     public void resume() {
@@ -182,7 +192,6 @@ public class LevelSelectState implements Screen{
 
     @Override
     public void dispose() {
-        logo.getTexture().dispose();
         skin.dispose();
         myStage.clear();
     }

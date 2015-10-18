@@ -119,6 +119,11 @@ public class PlayState implements Screen{
 			asignarMonedas = 3;
 		if(currentLevel == 5)
 			asignarMonedas = 3;
+		if(currentLevel == 6)
+			asignarMonedas = 3;
+		if(currentLevel == 7)
+			asignarMonedas = 1;
+
 		monedasObject = new LinkedList<Moneda>();
 		for(int i = 0; i < asignarMonedas; i++){
 			Moneda moneda = new Moneda(map);
@@ -129,6 +134,7 @@ public class PlayState implements Screen{
 		/* Cajas */
 		if(currentLevel == 5)
 			asignarCajas = 0;
+
 		cajasObject = new Box[asignarCajas];
 		for(int i = 0; i < cajasObject.length; i++){
 			cajasObject[i] = new Box(map);

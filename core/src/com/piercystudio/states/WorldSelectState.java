@@ -32,7 +32,7 @@ public class WorldSelectState implements Screen{
     private PiercyGame game;
     private Stage myStage;
     private SpriteBatch batch;
-    private Skin skin;
+    private Skin skin, skin2;
     private TextureRegion logo;
 
     public WorldSelectState(PiercyGame game){
@@ -92,6 +92,34 @@ public class WorldSelectState implements Screen{
         textButton4.setPosition(566, PiercyGame.HEIGHT / 2 - 75);
         textButton4.addListener(new levelListener());
         myStage.addActor(textButton4);
+
+        /* Boton de regreso */
+        skin2 = new Skin();
+
+        Pixmap pixmap2 = new Pixmap(140, 50, Format.RGBA8888);
+        pixmap2.setColor(Color.MAROON);
+        pixmap2.fill();
+
+
+        skin2.add("white", new Texture(pixmap2));
+
+        BitmapFont bfont2 = new BitmapFont();
+        skin2.add("default", bfont2);
+
+        TextButtonStyle backButtonStyle = new TextButtonStyle();
+        backButtonStyle.up = skin2.newDrawable("white", Color.DARK_GRAY);
+        backButtonStyle.down = skin2.newDrawable("white", Color.DARK_GRAY);
+        backButtonStyle.checked = skin2.newDrawable("white", Color.CLEAR);
+        backButtonStyle.over = skin2.newDrawable("white", Color.LIGHT_GRAY);
+
+        backButtonStyle.font = skin2.getFont("default");
+
+        skin2.add("default", backButtonStyle);
+
+        final TextButton backButton = new TextButton("Regresar", backButtonStyle);
+        backButton.setPosition(30, 400);
+        backButton.addListener(new backListener());
+        myStage.addActor(backButton);
     }
 
     /* Listener de botones */
@@ -114,6 +142,12 @@ public class WorldSelectState implements Screen{
             }
 
             game.setScreen(new LevelSelectState(game, world));
+        }
+    }
+
+    private class backListener extends ChangeListener{
+        public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(new MenuScreen(game));
         }
     }
 
@@ -159,9 +193,7 @@ public class WorldSelectState implements Screen{
 
     @Override
     public void dispose() {
-        myStage.dispose();
-        logo.getTexture().dispose();
+        myStage.clear();
         skin.dispose();
-        batch.dispose();
     }
 }
