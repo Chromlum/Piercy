@@ -45,16 +45,17 @@ public class MenuScreen implements Screen{
 	private TextureRegion logo;
 	
 	public MenuScreen(PiercyGame game){
-		
+
+		this.game = game;
+		batch = game.getBatch();
+		myStage = game.getMyStage();
 		/* Cargar / crear savefile */
 		
 		Save.load();
 		if(Save.gd.getCurrentLevel() == 0){
 			Save.gd.init();
 		}
-	
-		create();
-		this.game = game;
+
 		
 		//  PiercyGame.res.getMusic("bgmusic").setLooping(true);
 		//  PiercyGame.res.getMusic("bgmusic").play();
@@ -62,9 +63,9 @@ public class MenuScreen implements Screen{
 	}
 	
 	/* Crea menu con botones */
-	public void create(){
-		batch = new SpriteBatch();
-		myStage = new Stage();
+    @Override
+	public void show(){
+
 		Gdx.input.setInputProcessor(myStage);
 		
 		Texture textura = PiercyGame.res.getImage("logoMenu");
@@ -145,7 +146,6 @@ public class MenuScreen implements Screen{
 
 	}
 
-	public void show() { }
 
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -170,12 +170,9 @@ public class MenuScreen implements Screen{
 
 	public void hide() { }
 
-	public void dispose() { 
-		
-		myStage.dispose();
-		logo.getTexture().dispose();
+	public void dispose() {
 		skin.dispose();
-		batch.dispose();		
+		myStage.clear();
 	}
 	
 	

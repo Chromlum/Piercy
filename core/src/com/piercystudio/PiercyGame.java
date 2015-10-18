@@ -10,6 +10,8 @@
 package com.piercystudio;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -81,11 +83,24 @@ public class PiercyGame extends Game {
 	public String getVersion(){
 		return VERSION;
 	}
+
 	@Override
 	public void dispose(){
 		super.dispose();
 		this.batch.dispose();
 		this.myStage.dispose();
 	}
+
+    @Override
+    public void setScreen(Screen screen){
+        if (this.screen != null) this.screen.dispose();
+        this.screen = screen;
+        if (this.screen != null) {
+            this.screen.show();
+            this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+
+    }
+
 
 }
