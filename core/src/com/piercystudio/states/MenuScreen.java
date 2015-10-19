@@ -63,7 +63,7 @@ public class MenuScreen implements Screen{
 	}
 	
 	/* Crea menu con botones */
-    @Override
+    
 	public void show(){
 
 		Gdx.input.setInputProcessor(myStage);

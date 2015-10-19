@@ -121,7 +121,7 @@ public class PlayState implements Screen{
 		if(currentLevel == 4)
 			asignarMonedas = 4;
 		if(currentLevel == 5)
-			asignarMonedas = 3;
+			asignarMonedas = 5;
 		if(currentLevel == 6)
 			asignarMonedas = 5;
 		if(currentLevel == 7)
