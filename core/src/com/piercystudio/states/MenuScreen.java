@@ -43,6 +43,7 @@ public class MenuScreen implements Screen{
 	private SpriteBatch batch;
 	private Skin skin;
 	private TextureRegion logo;
+    private Texture bg;
 	
 	public MenuScreen(PiercyGame game){
 
@@ -70,6 +71,8 @@ public class MenuScreen implements Screen{
 		
 		Texture textura = PiercyGame.res.getImage("logoMenu");
 		logo = new TextureRegion(textura, 300, 150);
+
+        bg = PiercyGame.res.getImage("bgMenu");
 		
 		/* Comienza creacion y colocacion de botones */
 		skin = new Skin();
@@ -88,7 +91,7 @@ public class MenuScreen implements Screen{
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.checked = skin.newDrawable("white", Color.CLEAR);
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		
+
 		textButtonStyle.font = skin.getFont("default");
 		
 		skin.add("default", textButtonStyle);
@@ -159,6 +162,8 @@ public class MenuScreen implements Screen{
 	public void draw(){
 		batch.begin();
 		batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
+        bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        batch.draw(bg, 0, 0, PiercyGame.WIDTH, PiercyGame.HEIGHT);
 		batch.end();
 	}
 	

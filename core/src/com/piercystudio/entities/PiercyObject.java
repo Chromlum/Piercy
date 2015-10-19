@@ -28,7 +28,7 @@ public class PiercyObject {
 	protected TiledMap map;
 	protected Animation animation;
     private boolean showC;
-    private boolean colisionx;
+    private boolean colisionxD, colisionxI;
 	
 	public PiercyObject(TiledMap map){
 		this.map = map;
@@ -92,19 +92,19 @@ public class PiercyObject {
 		if (dx < 0) {
 			if (topLeft || bottomLeft) {
 				dx = 0;
-                colisionx = true;
+                colisionxI = true;
 			}  else {
 				xtemp += dx;
-                colisionx = false;
+                colisionxI = false;
 			}
 		}
 		if (dx > 0) {
 			if (topRight || bottomRight) {
 				dx = 0;
-                colisionx = true;
+                colisionxD = true;
 			}  else {
 				xtemp += dx;
-                colisionx = false;
+                colisionxD = false;
 			}
 		}
 		if (!Falling) {
@@ -185,9 +185,11 @@ public class PiercyObject {
         showC = false;
     }
 
-    public boolean getColisionX(){
-        return colisionx;
+    public boolean getColisionXD(){
+        return colisionxD;
     }
+
+	public boolean getColisionXI(){return  colisionxI;}
 
 
 }

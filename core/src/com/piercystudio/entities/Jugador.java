@@ -29,6 +29,7 @@ public class Jugador extends PiercyObject{
 		BRINCARI
 	}
 	private double distanciaAcumulada;
+	private double distanciaPermitida;
 	private Queue<Movimientos> actionQueue;
 	private boolean actividad;
 	private boolean hasFinished;
@@ -85,16 +86,26 @@ public class Jugador extends PiercyObject{
 				Movimientos action = actionQueue.poll();
 				if (action != null){
 					switch (action){
-						case DERECHA: this.setRight(true);break;
-						case IZQUIERDA: this.setLeft(true);break;
-						case BRINCAR: this.setJumping(true);break;
+						case DERECHA: {
+							this.setRight(true);
+							distanciaPermitida = 32;
+						}break;
+						case IZQUIERDA: {
+							this.setLeft(true);
+							distanciaPermitida = 32;
+						}break;
+						case BRINCAR: {
+							this.setJumping(true);
+						}break;
 						case BRINCARD:{
 							this.setRight(true);
 							this.setJumping(true);
+							distanciaPermitida = 100;
 						}break;
 						case BRINCARI:{
 							this.setLeft(true);
 							this.setJumping(true);
+							distanciaPermitida = 100;
 						}break;
 					default:
 						break;
@@ -114,7 +125,7 @@ public class Jugador extends PiercyObject{
 			if (dx > maxSpeed) {
 				dx = maxSpeed;
 			}
-			if (distanciaAcumulada > 32 || getColisionX()){
+			if (distanciaAcumulada > distanciaPermitida || getColisionXD()){
 				Right = false;
 				hasFinished = true;
 				distanciaAcumulada = 0;
@@ -126,7 +137,7 @@ public class Jugador extends PiercyObject{
 			if (dx < -maxSpeed) {
 				dx = -maxSpeed;
 			}
-			if (distanciaAcumulada > 32 || getColisionX()){
+			if (distanciaAcumulada > distanciaPermitida || getColisionXI()){
 				Left = false;
 				hasFinished = true;
 				distanciaAcumulada = 0;
