@@ -233,7 +233,7 @@ public class PlayState implements Screen{
 							}else{
 								// TODO AQUI MARCA LOS ERRORES
 								System.out.println(resultados[i]);
-								Save.gd.addError();
+								Save.gd.addError(currentLevel);
 								Save.save();
 							}
 						}
