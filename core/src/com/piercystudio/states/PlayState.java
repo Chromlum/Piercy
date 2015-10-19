@@ -92,6 +92,7 @@ public class PlayState implements Screen{
 		labelSkin = new JSkin();
 		
 		PiercyGame.res.getMusic("bgmusic").setLooping(true);
+		PiercyGame.res.getMusic("bgmusic").setVolume(0.5f);
 		PiercyGame.res.getMusic("bgmusic").play();
 		
 		/* Mapa */
