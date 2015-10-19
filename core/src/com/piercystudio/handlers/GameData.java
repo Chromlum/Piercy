@@ -11,6 +11,7 @@
 package com.piercystudio.handlers;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class GameData implements Serializable{
 	
@@ -22,8 +23,19 @@ public class GameData implements Serializable{
 	public int errores;
 	public String resultado;
 	
+	public HashMap<Integer, Integer>lvlErrors;
+	
 	public GameData(){
 		firstRun = true;
+		lvlErrors = new HashMap<Integer, Integer>();
+		
+		lvlErrors.put(1, 0);
+		lvlErrors.put(2, 0);
+		lvlErrors.put(3, 0);
+		lvlErrors.put(4, 0);
+		lvlErrors.put(5, 0);
+		lvlErrors.put(6, 0);
+		
 	}
 	
 	public void init(){
@@ -46,8 +58,9 @@ public class GameData implements Serializable{
 		return firstRun;
 	}
 	
-	public void addError(){
+	public void addError(int level){
 		errores += 1;
+		lvlErrors.put(level, lvlErrors.get(level)+1);
 	}
 	
 	public int getError(){
