@@ -27,6 +27,15 @@ public class GameData implements Serializable{
 	
 	public GameData(){
 		firstRun = true;
+		lvlErrors = new HashMap<Integer, Integer>();
+		
+		lvlErrors.put(1, 0);
+		lvlErrors.put(2, 0);
+		lvlErrors.put(3, 0);
+		lvlErrors.put(4, 0);
+		lvlErrors.put(5, 0);
+		lvlErrors.put(6, 0);
+		
 	}
 	
 	public void init(){
