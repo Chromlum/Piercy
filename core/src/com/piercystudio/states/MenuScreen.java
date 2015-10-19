@@ -162,8 +162,8 @@ public class MenuScreen implements Screen{
 	public void draw(){
 		batch.begin();
 		batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
-        bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        batch.draw(bg, 0, 0, PiercyGame.WIDTH, PiercyGame.HEIGHT);
+        //bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        //batch.draw(bg, 0, 0, PiercyGame.WIDTH, PiercyGame.HEIGHT);
 		batch.end();
 	}
 	
