@@ -91,6 +91,9 @@ public class PlayState implements Screen{
 		skin = new Skin();
 		labelSkin = new JSkin();
 		
+		PiercyGame.res.getMusic("bgmusic").setLooping(true);
+		PiercyGame.res.getMusic("bgmusic").play();
+		
 		/* Mapa */
 		map = new TmxMapLoader().load(PiercyGame.res.getLevel(currentLevel));
 		System.out.println(PiercyGame.res.getLevel(currentLevel));
