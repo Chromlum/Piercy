@@ -1,0 +1,21 @@
+ASIGNACION DE VALORES A VARIABLES
+1. Las variables no son nada más que casillas de memoria para guardar datos.
+2. Existen distintos tipos de variables: integer, float, char, string, boolean
+3. Dependiendo del tipo de variable el interprete hace la casilla en la memoria.
+4. En Python la declaracion de una variable ocurre al utilizar el signo igual "="
+5. Lo que está a la izquierda es el nombre de la variable.
+6. Y lo que está a a la derecha es el valor
+7. piercy = "Heroe"
+8. monedas = 1000
+9. Python te permite asignarle el mismo valor a multiples variables
+	ej: a = b = c = 3
+10. Tambien puedes asignar multiples nombres a multiples valores
+	ej: a, b, c = 1, 2, "Piercy"
+    Alli "a" vale "1", "b" vale 2 y "c" es "Piercy"
+
+TIPOS DE DATA
+1. Como te habíamos dicho hay distintos tipos de variables
+2. Tu edad es un numero.
+3. Tu tipo de sangre es alfanumérico
+
+
