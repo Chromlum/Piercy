@@ -27,6 +27,8 @@ public class PiercyObject {
 	protected int tileSize;
 	protected TiledMap map;
 	protected Animation animation;
+    private boolean showC;
+    private boolean colisionx;
 	
 	public PiercyObject(TiledMap map){
 		this.map = map;
@@ -34,6 +36,7 @@ public class PiercyObject {
 		layer = (TiledMapTileLayer) this.map.getLayers().get(1);
 		tileSize = map.getProperties().get("tilewidth", Integer.class);
 		animation = new Animation();
+        showC = true;
 	}
 	
 	/* Calcular esquinas de tiles */
@@ -89,15 +92,19 @@ public class PiercyObject {
 		if (dx < 0) {
 			if (topLeft || bottomLeft) {
 				dx = 0;
+                colisionx = true;
 			}  else {
 				xtemp += dx;
+                colisionx = false;
 			}
 		}
 		if (dx > 0) {
 			if (topRight || bottomRight) {
 				dx = 0;
+                colisionx = true;
 			}  else {
 				xtemp += dx;
+                colisionx = false;
 			}
 		}
 		if (!Falling) {
@@ -114,15 +121,17 @@ public class PiercyObject {
 	}
 	
 	public void draw(SpriteBatch sb) {
-		sb.begin();
-		if (facingRight) {
-			sb.draw(animation.getFrames(), (int) x - cwidth / 2, (int) y
-					- cheight / 2, width, height);
-		} else {
-			sb.draw(animation.getFrames(), (int) x - cwidth / 2 + width,
-					(int) y - cheight / 2, -width, height);
-		}
-		sb.end();
+        if(showC) {
+            sb.begin();
+            if (facingRight) {
+                sb.draw(animation.getFrames(), (int) x - cwidth / 2, (int) y
+                        - cheight / 2, width, height);
+            } else {
+                sb.draw(animation.getFrames(), (int) x - cwidth / 2 + width,
+                        (int) y - cheight / 2, -width, height);
+            }
+            sb.end();
+        }
 	}
 	
 	public void setPosition(double x, double y) {
@@ -171,5 +180,14 @@ public class PiercyObject {
 	public void setFalling(boolean falling){
 		Falling = falling;
 	}
+
+    public void dispose(){
+        showC = false;
+    }
+
+    public boolean getColisionX(){
+        return colisionx;
+    }
+
 
 }

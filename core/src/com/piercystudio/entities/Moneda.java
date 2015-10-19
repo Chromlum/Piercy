@@ -17,6 +17,7 @@ import com.piercystudio.PiercyGame;
 
 public class Moneda extends PiercyObject{
 
+
 	public Moneda(TiledMap map) {
 		super(map);
 		facingRight = true;
@@ -90,6 +91,10 @@ public class Moneda extends PiercyObject{
 	@Override
 	public void draw(SpriteBatch sb) {
 		super.draw(sb);
+	}
+
+	public void dispose(){
+
 	}
 
 }

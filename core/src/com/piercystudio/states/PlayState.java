@@ -12,6 +12,7 @@ package com.piercystudio.states;
 
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.LinkedList;
 
 
 import org.python.util.PythonInterpreter;
@@ -49,14 +50,14 @@ public class PlayState implements Screen{
 	
 	/* Gdx */
 	private PiercyGame game;
-	private OrthographicCamera camera, fondoCam;
-	private SpriteBatch batch, fondo;
+	private OrthographicCamera camera, fondoCamera;
+	private SpriteBatch batch;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private Skin skin;
 	private Stage myStage;
 	private Jugador jugador;
-	private Moneda[] monedasObject;
+	private LinkedList<Moneda> monedasObject;
 	private Box[] cajasObject;
 	private TextureRegion bg;
 	
@@ -81,12 +82,11 @@ public class PlayState implements Screen{
 		myStage = this.game.getMyStage();
 		Gdx.input.setInputProcessor(myStage);
 		camera = this.game.getCamera();
-		fondoCam = new OrthographicCamera();
-		fondoCam.setToOrtho(false, PiercyGame.WIDTH, PiercyGame.HEIGHT);
+		fondoCamera = new OrthographicCamera();
+		fondoCamera.setToOrtho(false, PiercyGame.WIDTH, PiercyGame.HEIGHT);
 		Texture tex = PiercyGame.res.getImage("bg");
 		bg = new TextureRegion(tex, 400, 240);
 		batch = this.game.getBatch();
-		fondo = new SpriteBatch();
 		Gdx.input.setInputProcessor(myStage);
 		skin = new Skin();
 		labelSkin = new JSkin();
@@ -119,15 +119,22 @@ public class PlayState implements Screen{
 			asignarMonedas = 3;
 		if(currentLevel == 5)
 			asignarMonedas = 3;
-		monedasObject = new Moneda[asignarMonedas];
-		for(int i = 0; i < monedasObject.length; i++){
-			monedasObject[i] = new Moneda(map);
-			monedasObject[i].setPosition(100+ (i*90), 800);
+		if(currentLevel == 6)
+			asignarMonedas = 3;
+		if(currentLevel == 7)
+			asignarMonedas = 1;
+
+		monedasObject = new LinkedList<Moneda>();
+		for(int i = 0; i < asignarMonedas; i++){
+			Moneda moneda = new Moneda(map);
+			moneda.setPosition(100 + (i * 90), 800);
+			monedasObject.add(moneda);
 		}
 		
 		/* Cajas */
 		if(currentLevel == 5)
 			asignarCajas = 0;
+
 		cajasObject = new Box[asignarCajas];
 		for(int i = 0; i < cajasObject.length; i++){
 			cajasObject[i] = new Box(map);
@@ -275,11 +282,9 @@ public class PlayState implements Screen{
 	}
 	
 	public void update(){
-		batch.setProjectionMatrix(camera.combined);
-		fondo.setProjectionMatrix(fondoCam.combined);
 		jugador.update(Gdx.graphics.getDeltaTime());
-		for(int i = 0; i < monedasObject.length; i++){
-			monedasObject[i].update(Gdx.graphics.getDeltaTime());
+		for(int i = 0; i < monedasObject.size(); i++){
+			monedasObject.get(i).update(Gdx.graphics.getDeltaTime());
 		}
 		for(int i = 0; i < cajasObject.length; i++){
 			cajasObject[i].update(Gdx.graphics.getDeltaTime());
@@ -307,11 +312,13 @@ public class PlayState implements Screen{
 		Save.save();
 	}
 	
-	public void colisionJugadorMoneda(Moneda[] monedas){
-		Double epsilon = 0.888;
-		for(int i = 0; i < monedas.length; i ++){
-			if(((int)jugador.getX() == monedas[i].getX())){
-				monedas[i].setPosition(500, 1500);
+	public void colisionJugadorMoneda(LinkedList<Moneda> monedas){
+		//Double epsilon = 0.888;
+		Double epsilon = 1.0;
+		for(int i = 0; i < monedas.size(); i ++){
+			if((monedas.get(i).getX() - jugador.getX()) < epsilon && (monedas.get(i).getY() - jugador.getY()) < epsilon){
+				monedas.get(i).dispose();
+                monedas.remove(monedas.indexOf(monedas.get(i)));
 				currentCoins += 1;
 				lblCantidadCoins.setText(String.valueOf(currentCoins));
 				PiercyGame.res.getSound("coin").play();
@@ -323,8 +330,6 @@ public class PlayState implements Screen{
 		Double epsilon = 1.0;
 		for(int i = 0; i < cajas.length; i++){
 			if(Math.abs(jugador.getX() - cajas[i].getX()) < epsilon){
-				//jugador.setPosition(jugador.getX() + 10, jugador.getY());
-				//jugador.setFalling(false);
 				jugador.setRight(false);
 				jugador.setLeft(false);
 			}
@@ -332,7 +337,7 @@ public class PlayState implements Screen{
 	}
 	
 	public void sigNivelLogic(){
-		if(currentCoins == monedasObject.length){
+		if(currentCoins == this.asignarMonedas){
 			jugador.setRight(false);
 			this.lblCantidadCoins.setVisible(false);
 			this.lblCurrentCoins.setVisible(false);
@@ -383,14 +388,16 @@ public class PlayState implements Screen{
 	}
 	
 	public void draw(){
-		fondo.begin();
-		fondo.draw(bg, 0, 0, 600, 480);
-		fondo.end();
+		batch.setProjectionMatrix(fondoCamera.combined);
+		batch.begin();
+		batch.draw(bg, 0, 0, 600, 480);
+		batch.end();
+		batch.setProjectionMatrix(camera.combined);
 		renderer.setView(camera);
 		renderer.render();
 		
-		for(int i = 0; i < monedasObject.length; i++){
-			monedasObject[i].draw(batch);
+		for(int i = 0; i < monedasObject.size(); i++){
+			monedasObject.get(i).draw(batch);
 		}
 		
 		for(int i = 0; i < cajasObject.length; i++){
@@ -424,8 +431,7 @@ public class PlayState implements Screen{
 
 	public void hide() { }
 
-	public void dispose() { 
-		myStage.dispose();
+	public void dispose() {
 		skin.dispose();
 		labelSkin.dispose();
 	}
