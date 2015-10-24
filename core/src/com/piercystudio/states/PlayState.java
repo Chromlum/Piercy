@@ -129,7 +129,9 @@ public class PlayState implements Screen{
 			asignarMonedas = 1;
 		if(currentLevel == 19)
 			asignarMonedas = 10;
-			jugador.setPosition(70, 130);
+		if(currentLevel == 20)
+			asignarMonedas = 5;
+			//jugador.setPosition(70, 130);
 
 		monedasObject = new LinkedList<Moneda>();
 		for(int i = 0; i < asignarMonedas; i++){
@@ -360,27 +362,19 @@ public class PlayState implements Screen{
 	}
 	
 	public void sigNivel(){
-		if(currentLevel == 1){
+		if(currentLevel == 1 || currentLevel == 2 || currentLevel == 3 || currentLevel == 4 || currentLevel == 5 || currentLevel == 6 ){
 			sigNivelLogic();
 		}
-		if(currentLevel == 2){
+		if(currentLevel == 7 || currentLevel == 8 || currentLevel == 9 || currentLevel == 10 || currentLevel == 11 || currentLevel == 12 ){
 			sigNivelLogic();
 		}
-		if(currentLevel == 3){
+		if(currentLevel == 13 || currentLevel == 14 || currentLevel == 15 || currentLevel == 16 || currentLevel == 17 || currentLevel == 18 ){
 			sigNivelLogic();
 		}
-		if(currentLevel == 4){
+		if(currentLevel == 19 || currentLevel == 20 || currentLevel == 21 || currentLevel == 22 || currentLevel == 23 || currentLevel == 24 ){
 			sigNivelLogic();
 		}
-		if(currentLevel == 5){
-			sigNivelLogic();
-		}
-		if(currentLevel == 6){
-			sigNivelLogic();
-		}
-		if(currentLevel == 7){
-			sigNivelLogic();
-		}
+		
 	}
 	
 	public void handleInput(){

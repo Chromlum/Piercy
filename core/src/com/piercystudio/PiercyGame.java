@@ -56,6 +56,7 @@ public class PiercyGame extends Game {
 		res.loadLevel(9, "Maps/map9.tmx");
 		res.loadLevel(10, "Maps/map10.tmx");
 		res.loadLevel(19, "Maps/map19.tmx");
+		res.loadLevel(20, "Maps/map20.tmx");
 		
 		/* Musica */
 		res.loadMusic("bgmusic", "Music/bgmusic.mp3");
