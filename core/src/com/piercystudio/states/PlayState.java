@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.LinkedList;
 
-
 import org.python.util.PythonInterpreter;
 
 import com.badlogic.gdx.Gdx;
@@ -246,6 +245,26 @@ public class PlayState implements Screen{
 								jugador.addAction(Movimientos.BRINCARI);
 								Save.gd.setExp(1);
 								Save.save();
+							}if(resultados[i].equals("exm")){
+								jugador.setRight(false);
+								lblCantidadCoins.setVisible(false);
+								lblCurrentCoins.setVisible(false);
+								lblNivelText.setVisible(false);
+								lblNivel.setVisible(false);
+								consola.setVisible(false);
+								botonConsola.setVisible(false);
+								PiercyGame.res.getMusic("bgmusic").stop();
+								Save.gd.setCurrentLevel(currentLevel);
+								Save.save();
+								WorldSelectState nextLvl = new WorldSelectState(game);
+								nextLvl.python = python;
+								game.setScreen(nextLvl);
+							}if(resultados[i].equals("help")){
+								// mostrar ayuda
+							}if(resultados[i].equals("musicOn")){
+								PiercyGame.res.getMusic("bgmusic").setVolume(0.5f);
+							}if(resultados[i].equals("musicOff")){
+								PiercyGame.res.getMusic("bgmusic").setVolume(0);
 							}else{
 								// TODO AQUI MARCA LOS ERRORES
 								System.out.println(resultados[i]);

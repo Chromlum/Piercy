@@ -9,6 +9,8 @@
  * 
  */
 package com.piercystudio.states;
+import org.python.util.PythonInterpreter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -34,6 +36,8 @@ public class WorldSelectState implements Screen{
     private SpriteBatch batch;
     private Skin skin, skin2;
     private TextureRegion logo;
+    
+    public PythonInterpreter python;
 
     public WorldSelectState(PiercyGame game){
         create();

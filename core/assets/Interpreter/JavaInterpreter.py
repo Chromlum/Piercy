@@ -40,6 +40,18 @@ class Interprete(object):
     def jumpbck(self):
         print("jbc")
 
+    def exitmenu(self):
+        print("exm")
+
+    def cryforhelp(self):
+        print("help")
+
+    def musicOn(self):
+        print("musicOn")
+
+    def musicOff(self):
+        print("musicOff")
+
 def main():
     interprete = Interprete()
 

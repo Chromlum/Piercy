@@ -14,6 +14,8 @@
  */
 package com.piercystudio.states;
 
+import org.python.util.PythonInterpreter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -45,6 +47,8 @@ public class MenuScreen implements Screen{
 	private TextureRegion logo;
     private Texture bg;
 	
+    public PythonInterpreter python;
+    
 	public MenuScreen(PiercyGame game){
 
 		this.game = game;
