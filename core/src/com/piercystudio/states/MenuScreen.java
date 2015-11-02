@@ -44,7 +44,7 @@ public class MenuScreen implements Screen{
 	private Stage myStage;
 	private SpriteBatch batch;
 	private Skin skin;
-	private TextureRegion logo;
+	private TextureRegion logo, bgImg;
     private Texture bg;
 	
     public PythonInterpreter python;
@@ -77,6 +77,9 @@ public class MenuScreen implements Screen{
 		logo = new TextureRegion(textura, 300, 150);
 
         bg = PiercyGame.res.getImage("bgMenu");
+
+        textura = PiercyGame.res.getImage("bg");
+        bgImg = new TextureRegion(textura, 400, 240);
 		
 		/* Comienza creacion y colocacion de botones */
 		skin = new Skin();
@@ -165,6 +168,7 @@ public class MenuScreen implements Screen{
 	
 	public void draw(){
 		batch.begin();
+		batch.draw(bgImg, 0, 0 , 800, 480);
 		batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
         //bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         //batch.draw(bg, 0, 0, PiercyGame.WIDTH, PiercyGame.HEIGHT);
