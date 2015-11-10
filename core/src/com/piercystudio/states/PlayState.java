@@ -132,6 +132,12 @@ public class PlayState implements Screen{
 			asignarMonedas = 5;
 		if(currentLevel == 21)
 			asignarMonedas = 5;
+		if(currentLevel == 22)
+			asignarMonedas = 7;
+		if(currentLevel == 23)
+			asignarMonedas = 12;
+		if(currentLevel == 24)
+			asignarMonedas = 13;
 			//jugador.setPosition(70, 130);
 
 		monedasObject = new LinkedList<Moneda>();
