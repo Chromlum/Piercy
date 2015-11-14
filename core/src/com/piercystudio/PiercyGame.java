@@ -55,6 +55,12 @@ public class PiercyGame extends Game {
 		res.loadLevel(8, "Maps/map8.tmx");
 		res.loadLevel(9, "Maps/map9.tmx");
 		res.loadLevel(10, "Maps/map10.tmx");
+		res.loadLevel(11, "Maps/map11.tmx");
+		res.loadLevel(12, "Maps/map12.tmx");
+		res.loadLevel(13, "Maps/map13.tmx");
+		res.loadLevel(14, "Maps/map14.tmx");
+		res.loadLevel(15, "Maps/map15.tmx");
+		res.loadLevel(16, "Maps/map16.tmx");
 		res.loadLevel(19, "Maps/map19.tmx");
 		res.loadLevel(20, "Maps/map20.tmx");
 		res.loadLevel(21, "Maps/map21.tmx");

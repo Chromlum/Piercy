@@ -1,5 +1,5 @@
 /*
- * LevelSelectState.java
+ * WorldSelectState.java
  * 
  * @author: Eric Mendoza
  * 16/09/15
@@ -82,17 +82,17 @@ public class WorldSelectState implements Screen{
         textButton.addListener(new levelListener());
         myStage.addActor(textButton);
 
-        final TextButton textButton2 = new TextButton("Variables", textButtonStyle);
+        final TextButton textButton2 = new TextButton("Algoritmos", textButtonStyle);
         textButton2.setPosition(278, PiercyGame.HEIGHT / 2 - 75);
         textButton2.addListener(new levelListener());
         myStage.addActor(textButton2);
 
-        final TextButton textButton3 = new TextButton("Condiciones", textButtonStyle);
+        final TextButton textButton3 = new TextButton("Avanzado", textButtonStyle);
         textButton3.setPosition(422, PiercyGame.HEIGHT / 2 - 75);
         textButton3.addListener(new levelListener());
         myStage.addActor(textButton3);
 
-        final TextButton textButton4 = new TextButton("Ciclos", textButtonStyle);
+        final TextButton textButton4 = new TextButton("Experto", textButtonStyle);
         textButton4.setPosition(566, PiercyGame.HEIGHT / 2 - 75);
         textButton4.addListener(new levelListener());
         myStage.addActor(textButton4);
@@ -135,11 +135,11 @@ public class WorldSelectState implements Screen{
 
             if (text.equals("Introduccion")){
                 world = 1;
-            } else if (text.equals("Variables")){
+            } else if (text.equals("Algoritmos")){
                 world = 2;
-            } else if (text.equals("Condiciones")){
+            } else if (text.equals("Avanzado")){
                 world = 3;
-            } else if (text.equals("Ciclos")){
+            } else if (text.equals("Experto")){
                 world = 4;
             } else {
                 world = 1;
