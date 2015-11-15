@@ -99,7 +99,7 @@ public class PlayState implements Screen{
 		map = new TmxMapLoader().load(PiercyGame.res.getLevel(currentLevel));
 		System.out.println(PiercyGame.res.getLevel(currentLevel));
 		renderer = new OrthogonalTiledMapRenderer(map);
-		jugador = new Jugador(new Sprite(PiercyGame.res.getImage("jugador")), map);
+		jugador = new Jugador(new Sprite(PiercyGame.res.getImage("player")), map);
 		jugador.setPosition(70, 130);
 		currentCoins = 0;
 		lblCurrentCoins = new Label("Monedas", labelSkin);
@@ -277,7 +277,7 @@ public class PlayState implements Screen{
 								Save.gd.setExp(1);
 								Save.save();
 							}if(resultados[i].equals("exm")){
-								jugador.setRight(false);
+								// jugador.setRight(false);
 								lblCantidadCoins.setVisible(false);
 								lblCurrentCoins.setVisible(false);
 								lblNivelText.setVisible(false);
@@ -350,7 +350,7 @@ public class PlayState implements Screen{
 		}
 		
 		if(jugador.isDead() == true){
-			jugador.setRight(false);
+			// jugador.setRight(false);
 			this.lblCantidadCoins.setVisible(false);
 			this.lblCurrentCoins.setVisible(false);
 			this.lblNivelText.setVisible(false);
@@ -389,15 +389,15 @@ public class PlayState implements Screen{
 		Double epsilon = 1.0;
 		for(int i = 0; i < cajas.length; i++){
 			if(Math.abs(jugador.getX() - cajas[i].getX()) < epsilon){
-				jugador.setRight(false);
-				jugador.setLeft(false);
+				//jugador.setRight(false);
+				//jugador.setLeft(false);
 			}
 		}
 	}
 	
 	public void sigNivelLogic(){
 		if(currentCoins == this.asignarMonedas){
-			jugador.setRight(false);
+			//jugador.setRight(false);
 			this.lblCantidadCoins.setVisible(false);
 			this.lblCurrentCoins.setVisible(false);
 			this.lblNivelText.setVisible(false);
@@ -432,7 +432,7 @@ public class PlayState implements Screen{
 			game.setScreen(new MenuScreen(game));
 		}
 		if(GameKey.isPressed(GameKey.ENTER)){
-			jugador.setRight(true);
+			//jugador.setRight(true);
 		}
 		
 		

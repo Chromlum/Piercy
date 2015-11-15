@@ -11,6 +11,7 @@ package com.piercystudio.entities;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -21,17 +22,31 @@ public abstract class PiercyObject extends Sprite{
     protected Vector2 velocidad;
     protected float g;
     protected float velocidadMax;
+    protected Animation animation;
 
     public PiercyObject(Sprite sprite){
         super(sprite);
+        velocidad = new Vector2();
+        g = 60f;
+        velocidadMax = 60;
     }
 
     @Override
     public void draw(Batch batch){
         update(Gdx.graphics.getDeltaTime());
-        super.draw(batch);
+        if(batch.isDrawing())
+            super.draw(batch);
+        else{
+            batch.begin();
+            super.draw(batch);
+            batch.end();
+        }
     }
 
     public abstract void update(float dt);
+
+    public void dispose(){
+        this.getTexture().dispose();
+    }
 
 }
