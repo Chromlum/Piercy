@@ -14,10 +14,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.piercystudio.PiercyGame;
 
 public class Jugador extends PiercyObject{
@@ -32,6 +35,8 @@ public class Jugador extends PiercyObject{
     private boolean brincar;
     private TiledMap mapa;
     private TiledMapTileLayer layer;
+    private ShapeRenderer shapeRenderer;
+    private boolean face;
     float dt;
 
     public enum Movimientos{
@@ -46,6 +51,7 @@ public class Jugador extends PiercyObject{
 
 	public Jugador(Sprite sprite, TiledMap mapa) {
 		super(sprite);
+        face = false;
         dt = 0;
         this.mapa = mapa;
         layer =(TiledMapTileLayer) mapa.getLayers().get(1);
@@ -53,72 +59,139 @@ public class Jugador extends PiercyObject{
         Texture tex = PiercyGame.res.getImage("player");
         TextureRegion[] sprites = new TextureRegion[4];
         for (int i = 0; i < sprites.length; i++) {
-            sprites[i] = new TextureRegion(tex, i * 32, 0, 32, 32);
+            sprites[i] = new TextureRegion(tex, i * 32 + 4, 0, 20, 32);
         }
 
         animation = new Animation(1f/5f, sprites);
 
+        shapeRenderer = new ShapeRenderer();
 
         actionQueue = new LinkedList<Movimientos>();
         actividad = false;
         hasFinished = true;
-        setSize(50, 50);
-	}
+        setPosition(70, 130);
+        setSize(30, 50);
+        System.out.println("Height:" + getWidth() + " Width: " + getWidth());
+}
 
 	@Override
 	public void draw(Batch batch) {
         dt += Gdx.graphics.getDeltaTime();
         setRegion(animation.getKeyFrame(dt, true));
+        flip(face, false);
         super.draw(batch);
 	}
 
 	@Override
 	public void update(float dt) {
         velocidad.y -= g * dt;
-        velocidad.x = velocidadMax;
         if(velocidad.y > velocidadMax){
             velocidad.y = velocidadMax;
-        }else if(velocidad.y < velocidadMax){
+        }else if(velocidad.y < -velocidadMax){
             velocidad.y = -velocidadMax;
         }
 
+        if (actividad){
+            if (hasFinished){
+                Movimientos action = actionQueue.poll();
+                if (action != null){
+                    switch (action){
+                        case DERECHA: {
+                            face = false;
+                            velocidad.x = velocidadMax * 0.5f;
+                            distanciaPermitida = 32;
+                        }break;
+                        case IZQUIERDA: {
+                            face = true;
+                            velocidad.x = -velocidadMax * 0.5f;
+                            distanciaPermitida = 32;
+                        }break;
+                        case BRINCAR: {
+                            velocidad.y = velocidadMax;
+                        }break;
+                        case BRINCARD:{
+                            face = false;
+                            velocidad.y = velocidadMax;
+                            velocidad.x = velocidadMax * 0.5f;
+                            distanciaPermitida = 100;
+                        }break;
+                        case BRINCARI:{
+                            face = true;
+                            velocidad.y = velocidadMax;
+                            velocidad.x = -velocidadMax * 0.5f;
+                            distanciaPermitida = 100;
+                        }break;
+                        default:
+                            break;
+                    }
+                    hasFinished = false;
+                }else{
+                    actividad = false;
+                    hasFinished = true;
+                }
+            }
 
-        boolean colx = false;
-        boolean coly = false;
-
-        currentFrame++;
-        if(currentFrame > 3){
-            currentFrame = 0;
         }
 
-        float posAx = getX();
-        float posAy = getY();
-
-        if(!collidesY())
-            setY(getY() + velocidad.y * dt);
-        else velocidad.y = 0;
-
-        System.out.println(velocidad.y);
+        float xA = getX();
+        float yA = getY();
         setX(getX() + velocidad.x * dt);
+        setY(getY() + velocidad.y * dt);
+        if(collidesXRight()){
+            setX(xA);
+            if(!hasFinished)
+                hasFinished = true;
+        }
+        if(collidesYBot()) {
+            setY(yA);
+            velocidad.y = 0;
+            if(!hasFinished)
+                hasFinished = true;
+        }
+
+
+
+
 
 	}
 
-    private boolean isCellBlocked(float x, float y) {
-        TiledMapTileLayer.Cell cell = layer.getCell((int) (x / layer.getTileWidth()), (int) (y / layer.getTileHeight()));
-        return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
+    public boolean getCell(float x, float y){
+        Cell celda = layer.getCell((int)(x / layer.getTileHeight()), (int)(y / layer.getTileHeight()) );
+        return celda != null && celda.getTile() != null && celda.getTile().getProperties().containsKey("blocked");
     }
 
-    private boolean collidesY(){
-        float increment = layer.getTileHeight();
-        increment = getHeight() < increment ? getHeight() / 2 : increment / 2;
-
-        for(float step = 0; step <= getWidth(); step += increment)
-            if(isCellBlocked(getX() + step, getY()))
+	public boolean collidesYBot(){
+        for(float particula = 0; particula < getWidth(); particula += 0.1){
+            if(getCell(getX() + particula, getY()))
                 return true;
+        }
         return false;
     }
 
-    
+    public boolean collidesYTop(){
+        for(float particula = 0; particula < getWidth(); particula += 0.1){
+            if(getCell(getX() + particula, getY() + getHeight()))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean collidesXLeft(){
+        for(float particula = 2f; particula < getHeight(); particula += 0.1){
+            if(getCell(getX(), getY() + particula))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean collidesXRight(){
+        for(float particula = 2f; particula < getHeight(); particula += 0.1){
+            if(getCell(getX() + getWidth(), getY() + particula))
+                return true;
+        }
+        return false;
+    }
+
 
     public boolean isActive(){
         return actividad;

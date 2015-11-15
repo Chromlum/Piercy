@@ -27,8 +27,8 @@ public abstract class PiercyObject extends Sprite{
     public PiercyObject(Sprite sprite){
         super(sprite);
         velocidad = new Vector2();
-        g = 60f;
-        velocidadMax = 60;
+        g = 90;
+        velocidadMax = 120;
     }
 
     @Override

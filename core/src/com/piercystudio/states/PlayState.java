@@ -100,7 +100,6 @@ public class PlayState implements Screen{
 		System.out.println(PiercyGame.res.getLevel(currentLevel));
 		renderer = new OrthogonalTiledMapRenderer(map);
 		jugador = new Jugador(new Sprite(PiercyGame.res.getImage("player")), map);
-		jugador.setPosition(70, 130);
 		currentCoins = 0;
 		lblCurrentCoins = new Label("Monedas", labelSkin);
 		lblCantidadCoins = new Label("0", labelSkin);
@@ -298,7 +297,6 @@ public class PlayState implements Screen{
 								PiercyGame.res.getMusic("bgmusic").setVolume(0);
 							}else{
 								// TODO AQUI MARCA LOS ERRORES
-								System.out.println(resultados[i]);
 								Save.gd.addError(currentLevel);
 								Save.save();
 							}
