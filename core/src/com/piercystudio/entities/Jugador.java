@@ -25,6 +25,7 @@ import com.piercystudio.PiercyGame;
 
 public class Jugador extends PiercyObject{
 
+    private float distancia;
     private Queue<Movimientos> actionQueue;
     private boolean actividad;
     private boolean hasFinished;
@@ -91,12 +92,10 @@ public class Jugador extends PiercyObject{
                         case DERECHA: {
                             face = false;
                             velocidad.x = velocidadMax * 0.5f;
-                            //distanciaPermitida = 32;
                         }break;
                         case IZQUIERDA: {
                             face = true;
                             velocidad.x = -velocidadMax * 0.5f;
-                            //distanciaPermitida = 32;
                         }break;
                         case BRINCAR: {
                             velocidad.y = velocidadMax;
@@ -129,6 +128,7 @@ public class Jugador extends PiercyObject{
 
         float xA = getX();
         float yA = getY();
+        distancia += Math.abs(velocidad.x * dt);
         setX(getX() + velocidad.x * dt);
         setY(getY() + velocidad.y * dt);
         if(collidesXRight() || collidesXLeft()){
@@ -144,6 +144,12 @@ public class Jugador extends PiercyObject{
                 if (!hasFinished)
                     hasFinished = true;
             }
+        }
+
+        if((action == Movimientos.DERECHA || action == Movimientos.IZQUIERDA) && distancia > 32){
+            distancia = 0;
+            velocidad.x = 0;
+            hasFinished = true;
         }
 	}
 
