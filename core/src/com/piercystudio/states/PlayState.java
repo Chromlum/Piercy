@@ -294,9 +294,15 @@ public class PlayState implements Screen{
         this.lblNivel.setVisible(false);
         Save.gd.setCurrentLevel(nextLevel);
         Save.save();
-        PlayState nextLvl = new PlayState(game, nextLevel);
-        nextLvl.python = this.python;
-        game.setScreen(nextLvl);
+        if(jugador.isDead()) {
+            PlayState lvl = new PlayState(game, currentLevel);
+            lvl.python = this.python;
+            game.setScreen(lvl);
+        }else{
+            PlayState lvl = new PlayState(game, nextLevel);
+            lvl.python = this.python;
+            game.setScreen(lvl);
+        }
 	}
 
 	
@@ -340,11 +346,15 @@ public class PlayState implements Screen{
 		this.game.getMyStage().addActor(lblNivel);
 	}
 
-	public void resize(int width, int height) { }
+	public void resize(int width, int height) {
 
-	public void pause() { }
+    }
 
-	public void resume() { }
+	public void pause() {
+    }
+
+	public void resume() {
+    }
 
 	public void hide() { }
 

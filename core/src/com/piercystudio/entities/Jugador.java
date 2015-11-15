@@ -54,7 +54,7 @@ public class Jugador extends PiercyObject{
         Texture tex = PiercyGame.res.getImage("player");
         TextureRegion[] sprites = new TextureRegion[4];
         for (int i = 0; i < sprites.length; i++) {
-            sprites[i] = new TextureRegion(tex, i * 32 + 4, 0, 20, 32);
+            sprites[i] = new TextureRegion(tex, i * 32 + 5, 0, 20, 32);
         }
 
         animation = new Animation(1f/4f, sprites);
@@ -151,6 +151,10 @@ public class Jugador extends PiercyObject{
             velocidad.x = 0;
             hasFinished = true;
         }
+
+        if(getY() < 0){
+            dead = true;
+        }
 	}
 
     public boolean getCell(float x, float y){
@@ -159,7 +163,7 @@ public class Jugador extends PiercyObject{
     }
 
 	public boolean collidesYBot(){
-        for(float particula = 0; particula < getWidth(); particula += 0.1){
+        for(float particula = 10f; particula < getWidth(); particula += 0.1){
             if(getCell(getX() + particula, getY()))
                 return true;
         }
@@ -167,7 +171,7 @@ public class Jugador extends PiercyObject{
     }
 
     public boolean collidesYTop(){
-        for(float particula = 0; particula < getWidth(); particula += 0.1){
+        for(float particula = 10f; particula < getWidth(); particula += 0.1){
             if(getCell(getX() + particula, getY() + getHeight()))
                 return true;
         }
@@ -222,4 +226,5 @@ public class Jugador extends PiercyObject{
     public void setFacing(boolean izquierda){
         face = izquierda;
     }
+
 }

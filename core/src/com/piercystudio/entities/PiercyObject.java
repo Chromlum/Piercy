@@ -49,4 +49,8 @@ public abstract class PiercyObject extends Sprite{
         this.getTexture().dispose();
     }
 
+	public Vector2 getVelocidad(){
+		return velocidad;
+	}
+
 }
