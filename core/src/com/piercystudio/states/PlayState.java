@@ -12,7 +12,6 @@ package com.piercystudio.states;
 
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.LinkedList;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.python.util.PythonInterpreter;
@@ -37,10 +36,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.piercystudio.PiercyGame;
-import com.piercystudio.entities.Box;
 import com.piercystudio.entities.Jugador;
 import com.piercystudio.entities.Jugador.Movimientos;
-import com.piercystudio.entities.Moneda;
 import com.piercystudio.handlers.GameKey;
 import com.piercystudio.handlers.JSkin;
 import com.piercystudio.handlers.Save;
@@ -57,18 +54,14 @@ public class PlayState implements Screen{
 	private Skin skin;
 	private Stage myStage;
 	private Jugador jugador;
-	private LinkedList<Moneda> monedasObject;
-	private Box[] cajasObject;
 	private TextureRegion bg;
 	
-	/* Current Level */
+	/* Current level */
 	private int currentLevel;
 	private int nextLevel;
 	private int currentCoins;
 	private Label lblCurrentCoins, lblCantidadCoins, lblNivelText, lblNivel;
 	private JSkin labelSkin;
-	private int asignarMonedas;
-	private int asignarCajas;
 	
 	/* Atributos de consola */
 	private TextButton botonConsola;
@@ -111,73 +104,7 @@ public class PlayState implements Screen{
 		lblNivelText.setVisible(true);
 		lblNivel.setVisible(true);
 		
-		/* Monedas*/
-		if(currentLevel == 1)
-			asignarMonedas = 1;
-		if(currentLevel == 2)
-			asignarMonedas = 2;
-		if(currentLevel == 3)
-			asignarMonedas = 6;
-		if(currentLevel == 4)
-			asignarMonedas = 4;
-		if(currentLevel == 5)
-			asignarMonedas = 5;
-		if(currentLevel == 6)
-			asignarMonedas = 5;
-		if(currentLevel == 7)
-			asignarMonedas = 7;
-		if(currentLevel == 8)
-			asignarMonedas = 4;
-		if(currentLevel == 9)
-			asignarMonedas = 8;
-		if(currentLevel == 10)
-			asignarMonedas = 12;
-		if(currentLevel == 11)
-			asignarMonedas = 12;
-		if(currentLevel == 12)
-			asignarMonedas = 5;
-		if(currentLevel == 13)
-			asignarMonedas = 10;
-		if(currentLevel == 14)
-			asignarMonedas = 16;
-		if(currentLevel == 15)
-			asignarMonedas = 16;
-		if(currentLevel == 16)
-			asignarMonedas = 10;
-		if(currentLevel == 17)
-			asignarMonedas = 9;
-		if(currentLevel == 18)
-			asignarMonedas = 12;
-		if(currentLevel == 19)
-			asignarMonedas = 10;
-		if(currentLevel == 20)
-			asignarMonedas = 5;
-		if(currentLevel == 21)
-			asignarMonedas = 5;
-		if(currentLevel == 22)
-			asignarMonedas = 7;
-		if(currentLevel == 23)
-			asignarMonedas = 12;
-		if(currentLevel == 24)
-			asignarMonedas = 13;
-			//jugador.setPosition(70, 130);
 
-		monedasObject = new LinkedList<Moneda>();
-		for(int i = 0; i < asignarMonedas; i++){
-			Moneda moneda = new Moneda(new Sprite(PiercyGame.res.getImage("coin")), map);
-			moneda.setPosition(100 + (i * 90), 800);
-			monedasObject.add(moneda);
-		}
-		
-		/* Cajas */
-		if(currentLevel == 5)
-			asignarCajas = 0;
-
-		cajasObject = new Box[asignarCajas];
-		for(int i = 0; i < cajasObject.length; i++){
-			cajasObject[i] = new Box(new Sprite(PiercyGame.res.getImage("box")), map);
-			cajasObject[i].setPosition(130 + (i * 95), 130);
-		}
 		
 	}
 
@@ -340,61 +267,21 @@ public class PlayState implements Screen{
 	
 	public void update(){
 		jugador.update(Gdx.graphics.getDeltaTime());
-		for(int i = 0; i < monedasObject.size(); i++){
-			monedasObject.get(i).update(Gdx.graphics.getDeltaTime());
-		}
-		for(int i = 0; i < cajasObject.length; i++){
-			cajasObject[i].update(Gdx.graphics.getDeltaTime());
-		}
 		
 		if(jugador.isDead() == true){
-			// jugador.setRight(false);
-			this.lblCantidadCoins.setVisible(false);
-			this.lblCurrentCoins.setVisible(false);
-			this.lblNivelText.setVisible(false);
-			this.lblNivel.setVisible(false);
-			Save.gd.setCurrentLevel(currentLevel);
-			Save.save();
-			PlayState nextLvl = new PlayState(game, currentLevel);
-			System.out.println("Nivel: "+ currentLevel);
-			nextLvl.python = this.python;
-			game.setScreen(nextLvl);
+			sigNivelLogic();
 		}
 		
 		handleInput();
-		colisionJugadorMoneda(monedasObject);
-		colisionJugadorCaja(cajasObject);
+		if (jugador.colisionMoneda()){
+
+		}
 		sigNivel();
 		Save.gd.setCurrentLevel(currentLevel);
 		Save.save();
 	}
-	
-	public void colisionJugadorMoneda(LinkedList<Moneda> monedas){
-		//Double epsilon = 0.888;
-		Double epsilon = 1.0;
-		for(int i = 0; i < monedas.size(); i ++){
-			if((monedas.get(i).getX() - jugador.getX()) < epsilon && (monedas.get(i).getY() - jugador.getY()) < epsilon){
-				monedas.get(i).dispose();
-                monedas.remove(monedas.indexOf(monedas.get(i)));
-				currentCoins += 1;
-				lblCantidadCoins.setText(String.valueOf(currentCoins));
-				PiercyGame.res.getSound("coin").play();
-			}
-		}
-	}
-	
-	public void colisionJugadorCaja(Box[] cajas){
-		Double epsilon = 1.0;
-		for(int i = 0; i < cajas.length; i++){
-			if(Math.abs(jugador.getX() - cajas[i].getX()) < epsilon){
-				//jugador.setRight(false);
-				//jugador.setLeft(false);
-			}
-		}
-	}
-	
+
 	public void sigNivelLogic(){
-		if(currentCoins == this.asignarMonedas){
 			//jugador.setRight(false);
 			this.lblCantidadCoins.setVisible(false);
 			this.lblCurrentCoins.setVisible(false);
@@ -406,7 +293,6 @@ public class PlayState implements Screen{
 			System.out.println("Nivel: "+ nextLevel);
 			nextLvl.python = this.python;
 			game.setScreen(nextLvl);
-		}
 	}
 	
 	public void sigNivel(){
@@ -444,14 +330,7 @@ public class PlayState implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		renderer.setView(camera);
 		renderer.render();
-		
-		for(int i = 0; i < monedasObject.size(); i++){
-			monedasObject.get(i).draw(batch);
-		}
-		
-		for(int i = 0; i < cajasObject.length; i++){
-			cajasObject[i].draw(batch);
-		}
+
 		jugador.draw(batch);
 		
 		/* Texto */

@@ -37,7 +37,9 @@ public class Jugador extends PiercyObject{
     private TiledMapTileLayer layer;
     private ShapeRenderer shapeRenderer;
     private boolean face;
+    private float anim;
     float dt;
+    Movimientos action;
 
     public enum Movimientos{
         DERECHA,
@@ -62,21 +64,19 @@ public class Jugador extends PiercyObject{
             sprites[i] = new TextureRegion(tex, i * 32 + 4, 0, 20, 32);
         }
 
-        animation = new Animation(1f/5f, sprites);
+        animation = new Animation(1f/4f, sprites);
 
         shapeRenderer = new ShapeRenderer();
 
         actionQueue = new LinkedList<Movimientos>();
         actividad = false;
         hasFinished = true;
-        setPosition(70, 130);
+        setPosition(25, 130);
         setSize(30, 50);
-        System.out.println("Height:" + getWidth() + " Width: " + getWidth());
-}
+    }
 
 	@Override
 	public void draw(Batch batch) {
-        dt += Gdx.graphics.getDeltaTime();
         setRegion(animation.getKeyFrame(dt, true));
         flip(face, false);
         super.draw(batch);
@@ -84,6 +84,7 @@ public class Jugador extends PiercyObject{
 
 	@Override
 	public void update(float dt) {
+
         velocidad.y -= g * dt;
         if(velocidad.y > velocidadMax){
             velocidad.y = velocidadMax;
@@ -93,7 +94,7 @@ public class Jugador extends PiercyObject{
 
         if (actividad){
             if (hasFinished){
-                Movimientos action = actionQueue.poll();
+                action = actionQueue.poll();
                 if (action != null){
                     switch (action){
                         case DERECHA: {
@@ -113,13 +114,11 @@ public class Jugador extends PiercyObject{
                             face = false;
                             velocidad.y = velocidadMax;
                             velocidad.x = velocidadMax * 0.5f;
-                            distanciaPermitida = 100;
                         }break;
                         case BRINCARI:{
                             face = true;
                             velocidad.y = velocidadMax;
                             velocidad.x = -velocidadMax * 0.5f;
-                            distanciaPermitida = 100;
                         }break;
                         default:
                             break;
@@ -133,26 +132,28 @@ public class Jugador extends PiercyObject{
 
         }
 
+        if(!hasFinished){
+            this.dt += dt;
+        }
+
         float xA = getX();
         float yA = getY();
         setX(getX() + velocidad.x * dt);
         setY(getY() + velocidad.y * dt);
-        if(collidesXRight()){
+        if(collidesXRight() || collidesXLeft()){
             setX(xA);
             if(!hasFinished)
                 hasFinished = true;
         }
-        if(collidesYBot()) {
+        if(collidesYBot() || collidesYTop()) {
             setY(yA);
             velocidad.y = 0;
-            if(!hasFinished)
-                hasFinished = true;
+            if(action == Movimientos.BRINCARD || action == Movimientos.BRINCARI || action == Movimientos.BRINCAR) {
+                velocidad.x = 0;
+                if (!hasFinished)
+                    hasFinished = true;
+            }
         }
-
-
-
-
-
 	}
 
     public boolean getCell(float x, float y){
@@ -190,6 +191,11 @@ public class Jugador extends PiercyObject{
                 return true;
         }
         return false;
+    }
+
+    public boolean colisionMoneda(){
+        Cell celda = layer.getCell((int)(getX() / layer.getTileHeight()), (int)(getY() / layer.getTileHeight()) );
+        return celda != null && celda.getTile() != null && celda.getTile().getProperties().containsKey("coin");
     }
 
 
