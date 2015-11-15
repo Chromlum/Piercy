@@ -165,7 +165,7 @@ public class PlayState implements Screen{
 
 		monedasObject = new LinkedList<Moneda>();
 		for(int i = 0; i < asignarMonedas; i++){
-			Moneda moneda = new Moneda(map);
+			Moneda moneda = new Moneda(new Sprite(PiercyGame.res.getImage("coin")), map);
 			moneda.setPosition(100 + (i * 90), 800);
 			monedasObject.add(moneda);
 		}
@@ -176,7 +176,7 @@ public class PlayState implements Screen{
 
 		cajasObject = new Box[asignarCajas];
 		for(int i = 0; i < cajasObject.length; i++){
-			cajasObject[i] = new Box(map);
+			cajasObject[i] = new Box(new Sprite(PiercyGame.res.getImage("box")), map);
 			cajasObject[i].setPosition(130 + (i * 95), 130);
 		}
 		

@@ -16,13 +16,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 
-public class PiercyObject extends Sprite{
+public abstract class PiercyObject extends Sprite{
 
-    private Vector2 velocidad;
-    private float g;
-    private float velocidadMax;
+    protected Vector2 velocidad;
+    protected float g;
+    protected float velocidadMax;
 
-    public PiercyObject(Sprite sprite, TiledMap mapa){
+    public PiercyObject(Sprite sprite){
         super(sprite);
     }
 
@@ -32,17 +32,6 @@ public class PiercyObject extends Sprite{
         super.draw(batch);
     }
 
-    public void update(float dt){
-        velocidad.y -= g * dt;
-
-        if(velocidad.y > velocidadMax){
-            velocidad.y = velocidadMax;
-        }else if(velocidad.y < velocidadMax){
-            velocidad.y -= velocidadMax;
-        }
-
-        setY(getY() + velocidad.y * dt);
-        setX(getX() + velocidad.x * dt);
-    }
+    public abstract void update(float dt);
 
 }

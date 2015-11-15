@@ -19,7 +19,7 @@ import com.piercystudio.PiercyGame;
 
 public class Box extends PiercyObject{
 	public Box(Sprite sprite, TiledMap mapa) {
-		super(sprite, mapa);
+		super(sprite);
 	}
 
 	@Override
@@ -29,6 +29,14 @@ public class Box extends PiercyObject{
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);
+		velocidad.y -= g * dt;
+
+		if(velocidad.y > velocidadMax){
+			velocidad.y = velocidadMax;
+		}else if(velocidad.y < velocidadMax){
+			velocidad.y -= velocidadMax;
+		}
+
+		setY(getY() + velocidad.y * dt);
 	}
 }

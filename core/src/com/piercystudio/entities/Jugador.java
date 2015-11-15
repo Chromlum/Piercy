@@ -23,6 +23,21 @@ import com.piercystudio.PiercyGame;
 
 public class Jugador extends PiercyObject{
 
+    private double distanciaAcumulada;
+    private double distanciaPermitida;
+    private Queue<Movimientos> actionQueue;
+    private boolean actividad;
+    private boolean hasFinished;
+
+    public enum Movimientos{
+        DERECHA,
+        IZQUIERDA,
+        BRINCAR,
+        DESTRUIR,
+        BRINCARD,
+        BRINCARI
+    }
+
 
 	public Jugador(Sprite sprite, TiledMap mapa) {
 		super(sprite);
@@ -35,6 +50,29 @@ public class Jugador extends PiercyObject{
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);
+        velocidad.y -= g * dt;
+
+        if(velocidad.y > velocidadMax){
+            velocidad.y = velocidadMax;
+        }else if(velocidad.y < velocidadMax){
+            velocidad.y -= velocidadMax;
+        }
+
+        setY(getY() + velocidad.y * dt);
+        setX(getX() + velocidad.x * dt);
 	}
+
+    public boolean isActive(){
+        return actividad;
+    }
+
+    public void addAction(Movimientos s){
+        actionQueue.add(s);
+    }
+
+    public void setActive(boolean activo){
+        actividad = activo;
+    }
+
+
 }
