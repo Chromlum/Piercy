@@ -60,6 +60,7 @@ public class PlayState implements Screen{
 	private int currentLevel;
 	private int nextLevel;
 	private int currentCoins;
+    private int totalMonedas;
 	private Label lblCurrentCoins, lblCantidadCoins, lblNivelText, lblNivel;
 	private JSkin labelSkin;
 	
@@ -90,7 +91,7 @@ public class PlayState implements Screen{
 		
 		/* Mapa */
 		map = new TmxMapLoader().load(PiercyGame.res.getLevel(currentLevel));
-		System.out.println(PiercyGame.res.getLevel(currentLevel));
+        totalMonedas = Integer.parseInt((String)map.getLayers().get(0).getProperties().get("coinNumber"));
 		renderer = new OrthogonalTiledMapRenderer(map);
 		jugador = new Jugador(new Sprite(PiercyGame.res.getImage("player")), map);
 		currentCoins = 0;
@@ -274,42 +275,30 @@ public class PlayState implements Screen{
 		
 		handleInput();
 		if (jugador.colisionMoneda()){
-
+            currentCoins += 1;
+            lblCantidadCoins.setText(String.valueOf(currentCoins));
+            PiercyGame.res.getSound("coin").play();
+            if(currentCoins == totalMonedas){
+                sigNivelLogic();
+            }
 		}
-		sigNivel();
 		Save.gd.setCurrentLevel(currentLevel);
 		Save.save();
 	}
 
 	public void sigNivelLogic(){
-			//jugador.setRight(false);
-			this.lblCantidadCoins.setVisible(false);
-			this.lblCurrentCoins.setVisible(false);
-			this.lblNivelText.setVisible(false);
-			this.lblNivel.setVisible(false);
-			Save.gd.setCurrentLevel(nextLevel);
-			Save.save();
-			PlayState nextLvl = new PlayState(game, nextLevel);
-			System.out.println("Nivel: "+ nextLevel);
-			nextLvl.python = this.python;
-			game.setScreen(nextLvl);
+        jugador.setFacing(false);
+        this.lblCantidadCoins.setVisible(false);
+        this.lblCurrentCoins.setVisible(false);
+        this.lblNivelText.setVisible(false);
+        this.lblNivel.setVisible(false);
+        Save.gd.setCurrentLevel(nextLevel);
+        Save.save();
+        PlayState nextLvl = new PlayState(game, nextLevel);
+        nextLvl.python = this.python;
+        game.setScreen(nextLvl);
 	}
-	
-	public void sigNivel(){
-		if(currentLevel == 1 || currentLevel == 2 || currentLevel == 3 || currentLevel == 4 || currentLevel == 5 || currentLevel == 6 ){
-			sigNivelLogic();
-		}
-		if(currentLevel == 7 || currentLevel == 8 || currentLevel == 9 || currentLevel == 10 || currentLevel == 11 || currentLevel == 12 ){
-			sigNivelLogic();
-		}
-		if(currentLevel == 13 || currentLevel == 14 || currentLevel == 15 || currentLevel == 16 || currentLevel == 17 || currentLevel == 18 ){
-			sigNivelLogic();
-		}
-		if(currentLevel == 19 || currentLevel == 20 || currentLevel == 21 || currentLevel == 22 || currentLevel == 23 || currentLevel == 24 ){
-			sigNivelLogic();
-		}
-		
-	}
+
 	
 	public void handleInput(){
 		if(GameKey.isPressed(GameKey.ESC)){

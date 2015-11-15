@@ -25,19 +25,12 @@ import com.piercystudio.PiercyGame;
 
 public class Jugador extends PiercyObject{
 
-    private double distanciaAcumulada;
-    private double distanciaPermitida;
     private Queue<Movimientos> actionQueue;
     private boolean actividad;
-    private int currentFrame;
     private boolean hasFinished;
     private boolean dead;
-    private boolean brincar;
-    private TiledMap mapa;
     private TiledMapTileLayer layer;
-    private ShapeRenderer shapeRenderer;
     private boolean face;
-    private float anim;
     float dt;
     Movimientos action;
 
@@ -55,7 +48,6 @@ public class Jugador extends PiercyObject{
 		super(sprite);
         face = false;
         dt = 0;
-        this.mapa = mapa;
         layer =(TiledMapTileLayer) mapa.getLayers().get(1);
         // carga texturas (sprites)
         Texture tex = PiercyGame.res.getImage("player");
@@ -66,7 +58,6 @@ public class Jugador extends PiercyObject{
 
         animation = new Animation(1f/4f, sprites);
 
-        shapeRenderer = new ShapeRenderer();
 
         actionQueue = new LinkedList<Movimientos>();
         actividad = false;
@@ -100,12 +91,12 @@ public class Jugador extends PiercyObject{
                         case DERECHA: {
                             face = false;
                             velocidad.x = velocidadMax * 0.5f;
-                            distanciaPermitida = 32;
+                            //distanciaPermitida = 32;
                         }break;
                         case IZQUIERDA: {
                             face = true;
                             velocidad.x = -velocidadMax * 0.5f;
-                            distanciaPermitida = 32;
+                            //distanciaPermitida = 32;
                         }break;
                         case BRINCAR: {
                             velocidad.y = velocidadMax;
@@ -194,8 +185,12 @@ public class Jugador extends PiercyObject{
     }
 
     public boolean colisionMoneda(){
-        Cell celda = layer.getCell((int)(getX() / layer.getTileHeight()), (int)(getY() / layer.getTileHeight()) );
-        return celda != null && celda.getTile() != null && celda.getTile().getProperties().containsKey("coin");
+        Cell celda = layer.getCell((int)((getX() + getWidth() / 2f) / layer.getTileHeight()),
+                (int)((getY() + getHeight() / 2f ) / layer.getTileHeight()) );
+        if(celda != null && celda.getTile() != null && celda.getTile().getProperties().containsKey("coin")){
+            celda.setTile(null);
+            return true;
+        }else return false;
     }
 
 
@@ -217,5 +212,8 @@ public class Jugador extends PiercyObject{
 
     public void setDead(boolean dead) {
         this.dead = dead;
+    }
+    public void setFacing(boolean izquierda){
+        face = izquierda;
     }
 }
