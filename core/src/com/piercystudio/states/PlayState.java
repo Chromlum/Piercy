@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.LinkedList;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.python.util.PythonInterpreter;
 
 import com.badlogic.gdx.Gdx;
@@ -98,7 +99,7 @@ public class PlayState implements Screen{
 		map = new TmxMapLoader().load(PiercyGame.res.getLevel(currentLevel));
 		System.out.println(PiercyGame.res.getLevel(currentLevel));
 		renderer = new OrthogonalTiledMapRenderer(map);
-		jugador = new Jugador(map);
+		jugador = new Jugador(new Sprite(PiercyGame.res.getImage("jugador")), map);
 		jugador.setPosition(70, 130);
 		currentCoins = 0;
 		lblCurrentCoins = new Label("Monedas", labelSkin);

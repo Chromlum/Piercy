@@ -38,7 +38,7 @@ public class Moneda extends PiercyObject{
 		}
 		animation.setFrames(sprites, 1 / 5f);
 	}
-	
+
 	public void getSiguientePosicion() {
 		if (Right) {
 			facingRight = true;
@@ -79,7 +79,7 @@ public class Moneda extends PiercyObject{
 			dy -= fallSpeed;
 		}
 	}
-	
+
 	@Override
 	public void update(float dt) {
 		super.update(dt);
