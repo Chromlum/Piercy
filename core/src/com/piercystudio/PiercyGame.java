@@ -71,8 +71,12 @@ public class PiercyGame extends Game {
 		res.loadLevel(24, "Maps/map24.tmx");
 		
 		/* Musica */
-		res.loadMusic("bgmusic", "Music/bgmusic.mp3");
+		res.loadMusic("bgmusic", "Music/ostGame1.mp3");
+		res.loadMusic("menuMusic", "Music/ostMenu.mp3");
 		res.loadSound("coin", "Music/coin.mp3");
+		res.loadSound("jump", "Music/sfxJump.wav");
+		res.loadSound("nextLevel", "Music/sfxNext.wav");
+		res.loadSound("select", "Music/sfxSelect.wav");
 		
 		setScreen(new MenuScreen(this));
 		

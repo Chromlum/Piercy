@@ -146,12 +146,14 @@ public class LevelSelectState implements Screen{
             TextButton sourceButton = (TextButton) event.getTarget();
             int level = Integer.parseInt(sourceButton.getLabel().getText().toString().substring(2,3));
             level = (world - 1) * 6 + level;
+            PiercyGame.res.getSound("select").play();
             game.setScreen(new LoadState(game, level));
         }
     }
 
     private class backListener extends ChangeListener{
         public void changed(ChangeEvent event, Actor actor) {
+        	PiercyGame.res.getSound("select").play();
             game.setScreen(new WorldSelectState(game));
         }
     }

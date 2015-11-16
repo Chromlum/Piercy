@@ -1,7 +1,7 @@
 /*
  * GameData.java
  * 
- * @author: E. Mendoza, J. Custodio, G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Guarda datos del juego.
@@ -14,10 +14,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class GameData implements Serializable{
+	/* ATRIBUTOS */
+	private static final long serialVersionUID = 1; //Solo se pueden cargar archivos con version serial 1
+	public boolean firstRun; // primera vez que se juega? si es asi, es verdadero y sirve para crear el archivo
 	
-	private static final long serialVersionUID = 1;
-	public boolean firstRun;
-	
+	/* Levels data */
 	public int currentLevel = 0;
 	public int exp;
 	public int errores;
@@ -25,10 +26,13 @@ public class GameData implements Serializable{
 	
 	public HashMap<Integer, Integer>lvlErrors;
 	
+	/* Constructor */
 	public GameData(){
+		// llamado si no existe un archivo; si es la primera vez que se juega.
 		firstRun = true;
 		lvlErrors = new HashMap<Integer, Integer>();
 		
+		/* Los errores por nivel comienzan en cero */
 		lvlErrors.put(1, 0);
 		lvlErrors.put(2, 0);
 		lvlErrors.put(3, 0);
@@ -66,35 +70,43 @@ public class GameData implements Serializable{
 		errores = 0;
 	}
 	
+	/* Obtener nivel actual */
 	public int getCurrentLevel(){
 		return currentLevel; 
 	}
 	
+	/* Colocar nivel actual */
 	public void setCurrentLevel(int level){
 		currentLevel = level;
 	}
 	
+	/* Obtener: primera vez que se corre el juego? */
 	public boolean getFirstRun(){
 		return firstRun;
 	}
 	
+	/* Agregar error en HashMap de errores */
 	public void addError(int level){
 		errores += 1;
 		lvlErrors.put(level, lvlErrors.get(level)+1);
 	}
 	
+	/* Obtener el numero de errores */
 	public int getError(){
 		return this.errores;
 	}
 	
+	/* Colocar experiencia: si se hace algo bien, se remunera */
 	public void setExp(int exp){
 		this.exp += exp;
 	}
 	
+	/* Obtener la experiencia lograda durante el juego */
 	public int getExp(){
 		return this.exp;
 	}
 	
+	/* Obtener resultado para mostrarlo en estadisticas */
 	public String getResultado(){
 		if(exp > errores){
 			resultado = "Buen trabajo.";
