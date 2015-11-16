@@ -307,7 +307,6 @@ public class PlayState implements Screen{
 			sigNivelLogic();
 		}
 		
-		handleInput();
 		if (jugador.colisionMoneda()){
             currentCoins += 1;
             lblCantidadCoins.setText(String.valueOf(currentCoins));
@@ -343,19 +342,6 @@ public class PlayState implements Screen{
         }
 	}
 
-    /**
-     * Manejo de teclas del Teclado
-     */
-	public void handleInput(){
-		if(GameKey.isPressed(GameKey.ESC)){
-			game.setScreen(new MenuScreen(game));
-		}
-		if(GameKey.isPressed(GameKey.ENTER)){
-			//jugador.setRight(true);
-		}
-		
-		
-	}
 
     /**
      * Metodo de dibujado
