@@ -144,7 +144,7 @@ public class WorldSelectState implements Screen{
             } else {
                 world = 1;
             }
-
+            PiercyGame.res.getSound("select").play();
             game.setScreen(new LevelSelectState(game, world));
         }
     }

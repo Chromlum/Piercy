@@ -191,16 +191,19 @@ public class PlayState implements Screen{
 								Save.save();
 							}else
 							if(resultados[i].equals("ju")){
+								PiercyGame.res.getSound("jump").play();
 								jugador.addAction(Movimientos.BRINCAR);
 								Save.gd.setExp(1);
 								Save.save();
 							}else
 							if(resultados[i].equals("jfd")){
+								PiercyGame.res.getSound("jump").play();
 								jugador.addAction(Movimientos.BRINCARD);
 								Save.gd.setExp(1);
 								Save.save();
 							}else
 							if(resultados[i].equals("jbc")){
+								PiercyGame.res.getSound("jump").play();
 								jugador.addAction(Movimientos.BRINCARI);
 								Save.gd.setExp(1);
 								Save.save();
@@ -300,6 +303,7 @@ public class PlayState implements Screen{
             lvl.python = this.python;
             game.setScreen(lvl);
         }else{
+        	PiercyGame.res.getSound("nextLevel").play();
             PlayState lvl = new PlayState(game, nextLevel);
             lvl.python = this.python;
             game.setScreen(lvl);

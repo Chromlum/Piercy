@@ -63,7 +63,7 @@ public class Jugador extends PiercyObject{
         actionQueue = new LinkedList<Movimientos>();
         actividad = false;
         hasFinished = true;
-        setPosition(25, 130);
+        setPosition(25, 110);
         setSize(30, 50);
     }
 

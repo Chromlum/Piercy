@@ -125,6 +125,7 @@ public class MenuScreen implements Screen{
 		textButton.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
+				PiercyGame.res.getSound("select").play();
 				game.setScreen(new WorldSelectState(game));
 			}
 			
@@ -133,6 +134,7 @@ public class MenuScreen implements Screen{
 		textButton2.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
+				PiercyGame.res.getSound("select").play();
 				game.setScreen(new LoadState(game, Save.gd.getCurrentLevel()));
 			}
 			
@@ -141,6 +143,7 @@ public class MenuScreen implements Screen{
 		textButton3.addListener(new ChangeListener(){
 			
 			public void changed (ChangeEvent event, Actor actor){
+				PiercyGame.res.getSound("select").play();
 				game.setScreen(new StatsScreen(game));
 			}
 			
@@ -149,6 +152,7 @@ public class MenuScreen implements Screen{
 		textButton4.addListener(new ClickListener(){
 			
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				PiercyGame.res.getSound("select").play();
 				Gdx.app.exit();
 				super.touchUp(event, x, y, pointer, button);
 			}
