@@ -15,10 +15,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class JSkin extends Skin{
-	
+	/* Constructor */
 	public JSkin(){
-		super(Gdx.files.internal("Skin/uiskin.json"), new TextureAtlas(
-				Gdx.files.internal("Skin/uiskin.txt")));
+		/* Usa constructor de Skin */
+		super(Gdx.files.internal("Skin/uiskin.json"), new TextureAtlas( //Obtiene skin en formato Json
+				Gdx.files.internal("Skin/uiskin.txt"))); // Crea un atlas de texturas con el skin del archivo .txt
 	}
 
 }

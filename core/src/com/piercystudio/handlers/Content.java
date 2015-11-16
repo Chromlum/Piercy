@@ -1,7 +1,7 @@
 /*
  * Content.java
  * 
- * @author: E. Mendoza, J. Custodio, G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Gestor de contenidos. Carga imagenes y sonidos.
@@ -24,6 +24,7 @@ public class Content {
 	private HashMap<String, Sound> sfx;
 	private HashMap<Integer, String> niveles;
 
+	/* CONSTRUCTOR */
 	public Content() {
 		texturas = new HashMap<String, Texture>();
 		musica = new HashMap<String, Music>();
@@ -31,6 +32,11 @@ public class Content {
 		niveles = new HashMap<Integer, String>();
 	}
 
+	/* ---------------------------------------------------------------------------------------------- */
+	/* Gestor de contenidos: los metodos "load" guardan un archivo en el HashMap correspondiente */
+	/* Gestor de contenidos: los metodos "get"  obtienen un archivo del HashMap correspondiente*/
+	/* ---------------------------------------------------------------------------------------------- *
+	
 	/* Graficos */
 	public void loadImage(String key, String path) {
 		texturas.put(key, new Texture(Gdx.files.internal(path)));
