@@ -171,10 +171,8 @@ public class StatsScreen implements Screen{
 
 	public void dispose() { 
 		
-		myStage.dispose();
-		logo.getTexture().dispose();
+		myStage.clear();
 		skin.dispose();
-		batch.dispose();
 		lblSkin.dispose();
 	}
 	
