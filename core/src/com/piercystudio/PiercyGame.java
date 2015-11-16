@@ -2,9 +2,9 @@
  * PiercyGame.java
  * 
  * @author: E. Mendoza, J. Custodio, G. Brolo
- * 16/09/15
+ * Fecha: 16/09/15
  * 
- * Crea el juego.
+ * Descripccion: Clase principal del juego es llamada del clase main
  * 
  */
 package com.piercystudio;
@@ -21,21 +21,25 @@ import com.piercystudio.states.MenuScreen;
 public class PiercyGame extends Game {
 	private Stage myStage;
 	private OrthographicCamera camera;
-	private SpriteBatch batch;
+	private SpriteBatch batch; // batch para dibuajr
 	public static int WIDTH = 480;
 	public static int HEIGHT = 320;
-	public static Content res;
+	public static Content res; // Recursos
 	public static final String TITULO = "Piercy";
-	public static final String VERSION = "0.0.1";
-	
-	
+	public static final String VERSION = "0.9";
+
+	/**
+	 * Metodo que se ejecuta al crear el juego
+	 */
 	public void create () {
 		myStage = new Stage();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 		batch = new SpriteBatch();
 		res = new Content();
-		
+
+		// Carga de recursos
+
 		/* Graficos */
 		res.loadImage("logoMenu", "logoMenu.png");
 		res.loadImage("player", "Sprites/sprites.png");
@@ -83,29 +87,39 @@ public class PiercyGame extends Game {
 	}
 
 
+	/**
+	 * Metodo para renderizar
+	 */
 	public void render () {
 		super.render();
 		myStage.act();
 		myStage.draw();
 	}
-	
+
+	// Getter de la camara
 	public OrthographicCamera getCamera() {
 		return camera;
 	}
 
+	// Getter del batch
 	public SpriteBatch getBatch() {
 		return batch;
 	}
 
 
+	// Getter del stage
 	public Stage getMyStage() {
 		return myStage;
 	}
 
+	// Obtener version del juego
 	public String getVersion(){
 		return VERSION;
 	}
 
+	/**
+	 * Metodo para liberar memoria
+	 */
 	@Override
 	public void dispose(){
 		super.dispose();
@@ -113,6 +127,10 @@ public class PiercyGame extends Game {
 		this.myStage.dispose();
 	}
 
+	/**
+	 * Metodo para cambiar pantalla
+	 * @param screen
+     */
     @Override
     public void setScreen(Screen screen){
         if (this.screen != null) this.screen.dispose();

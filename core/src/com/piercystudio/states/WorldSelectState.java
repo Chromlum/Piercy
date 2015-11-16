@@ -1,7 +1,7 @@
 /*
  * WorldSelectState.java
  * 
- * @author: Eric Mendoza
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Crea un menu para elegir el capitulo del juego.
@@ -37,13 +37,16 @@ public class WorldSelectState implements Screen{
     private Skin skin, skin2;
     private TextureRegion logo;
     
-    public PythonInterpreter python;
+    public PythonInterpreter python;  // Interprete de Python
 
     public WorldSelectState(PiercyGame game){
         create();
         this.game = game;
     }
 
+    /**
+     * Meotdo ejecutado al crear el screen
+     */
     public void create(){
         batch = new SpriteBatch();
         myStage = new Stage();
@@ -170,7 +173,10 @@ public class WorldSelectState implements Screen{
 
     }
 
-   
+    /**
+     * Metodo de renderizado
+     * @param delta
+     */
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -179,6 +185,9 @@ public class WorldSelectState implements Screen{
         draw();
     }
 
+    /**
+     * Metodo de dibujado
+     */
     private void draw() {
         batch.begin();
         batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);

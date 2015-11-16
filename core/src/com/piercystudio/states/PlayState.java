@@ -2,10 +2,10 @@
 /*
  * PlayState.java
  * 
- * @author: J. Custodio, G. Brolo
- * 16/09/15
+ *@author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
+ * Fecha: 16/09/15
  * 
- * Estado destinado a poder jugar. Es en este estado en donde se juega.
+ * Descripccion: Pantalla que contiene el stage al jugar
  * 
  */
 package com.piercystudio.states;
@@ -68,7 +68,12 @@ public class PlayState implements Screen{
 	private TextButton botonConsola;
 	private TextArea consola;
 	public PythonInterpreter python;
-	
+
+	/**
+	 * Constructor
+	 * @param game app prinicpal
+	 * @param level nivel del juego
+     */
 	public PlayState(PiercyGame game, int level){
 		this.game = game;
 		currentLevel = level;
@@ -110,6 +115,9 @@ public class PlayState implements Screen{
 		
 	}
 
+    /**
+     * Metodo ejecutado al mostrar en pantalla
+     */
 	public void show() {
 		Skin skin = new Skin(Gdx.files.internal("ConsoleSkin/uiskin.json"));
 		int width = Gdx.graphics.getWidth();
@@ -152,12 +160,26 @@ public class PlayState implements Screen{
 		});
 		
 	}
-	
+
+    /**
+     * Para futuras versiones
+     * @param e Evento del teclado
+     * @param c Caracter
+     */
 	public void syntaxHighlight(InputEvent e, char c){
 		//TODO
 	}
-	
+
+    /**
+     * Metodo esencial para interpretar codigo de consola
+     * @param event Evento donde se ejecuta
+     * @param x Coordenadas x del boton
+     * @param y Coordenadas y del boton
+     */
 	public void interpretarCodigo(InputEvent event, float x, float y){
+        /**
+         * Thread que ejecuta el interprete de python
+         */
 		new Thread(new Runnable() {
 			   public void run() {
 				   String[] comandos = null;
@@ -177,37 +199,39 @@ public class PlayState implements Screen{
 						Gdx.app.log(PiercyGame.TITULO, "Script Python Error");
 					}
 				   final String[] resultados = comandos;
+
+                   // Ejecucuion post-thread
 			      Gdx.app.postRunnable(new Runnable() {
 			         public void run() {			        	 
 			            for (int i = 0; i < resultados.length; i++){
-							if (resultados[i].equals("fd")){
+							if (resultados[i].equals("fd")){ // Mover derecha
 								jugador.addAction(Movimientos.DERECHA);
 								Save.gd.setExp(1);
 								Save.save();
 							}else
-							if(resultados[i].equals("bc")){
+							if(resultados[i].equals("bc")){ // Mover Izquierda
 								jugador.addAction(Movimientos.IZQUIERDA);
 								Save.gd.setExp(1);
 								Save.save();
 							}else
-							if(resultados[i].equals("ju")){
+							if(resultados[i].equals("ju")){ // Brincar
 								PiercyGame.res.getSound("jump").play();
 								jugador.addAction(Movimientos.BRINCAR);
 								Save.gd.setExp(1);
 								Save.save();
 							}else
-							if(resultados[i].equals("jfd")){
+							if(resultados[i].equals("jfd")){ // Brincar hacia la derecha
 								PiercyGame.res.getSound("jump").play();
 								jugador.addAction(Movimientos.BRINCARD);
 								Save.gd.setExp(1);
 								Save.save();
 							}else
-							if(resultados[i].equals("jbc")){
+							if(resultados[i].equals("jbc")){  // Brincar hacia la izquierda
 								PiercyGame.res.getSound("jump").play();
 								jugador.addAction(Movimientos.BRINCARI);
 								Save.gd.setExp(1);
 								Save.save();
-							}if(resultados[i].equals("exm")){
+							}if(resultados[i].equals("exm")){ // Salir al menu
 								// jugador.setRight(false);
 								lblCantidadCoins.setVisible(false);
 								lblCurrentCoins.setVisible(false);
@@ -221,14 +245,13 @@ public class PlayState implements Screen{
 								WorldSelectState nextLvl = new WorldSelectState(game);
 								nextLvl.python = python;
 								game.setScreen(nextLvl);
-							}if(resultados[i].equals("help")){
+							}if(resultados[i].equals("help")){ // Ayuda
 								// mostrar ayuda
 							}if(resultados[i].equals("musicOn")){
 								PiercyGame.res.getMusic("bgmusic").setVolume(0.5f);
 							}if(resultados[i].equals("musicOff")){
 								PiercyGame.res.getMusic("bgmusic").setVolume(0);
 							}else{
-								// TODO AQUI MARCA LOS ERRORES
 								Save.gd.addError(currentLevel);
 								Save.save();
 							}
@@ -240,6 +263,10 @@ public class PlayState implements Screen{
 			}).start();
 	}
 
+    /**
+     * Metodo de renderizado
+     * @param delta tiempo Delta
+     */
 	public void render(float delta) { 
 		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -269,7 +296,10 @@ public class PlayState implements Screen{
 		}
 		camera.update();
 	}
-	
+
+    /**
+     * Metodo update para realizar calculos
+     */
 	public void update(){
 		jugador.update(Gdx.graphics.getDeltaTime());
 		
@@ -290,6 +320,9 @@ public class PlayState implements Screen{
 		Save.save();
 	}
 
+    /**
+     * Cambio de nivel
+     */
 	public void sigNivelLogic(){
         jugador.setFacing(false);
         this.lblCantidadCoins.setVisible(false);
@@ -310,7 +343,9 @@ public class PlayState implements Screen{
         }
 	}
 
-	
+    /**
+     * Manejo de teclas del Teclado
+     */
 	public void handleInput(){
 		if(GameKey.isPressed(GameKey.ESC)){
 			game.setScreen(new MenuScreen(game));
@@ -321,7 +356,11 @@ public class PlayState implements Screen{
 		
 		
 	}
-	
+
+    /**
+     * Metodo de dibujado
+     */
+
 	public void draw(){
 		batch.setProjectionMatrix(fondoCamera.combined);
 		batch.begin();
@@ -351,18 +390,39 @@ public class PlayState implements Screen{
 		this.game.getMyStage().addActor(lblNivel);
 	}
 
+    /**
+     * Metodo de reajuste que se ejecuta al agrandar o disminuir el tamanio de la ventana
+     * @param width
+     * @param height
+     */
+    @Override
 	public void resize(int width, int height) {
 
     }
 
+    /**
+     * Metodo ejecutado al paausar
+     */
+    @Override
 	public void pause() {
     }
 
+    /**
+     * Metodo ejecutado al resumir
+     */
+    @Override
 	public void resume() {
     }
 
+    /**
+     * Metodo ejecutado al esconder el screen
+     */
+    @Override
 	public void hide() { }
 
+    /**
+     * Liberar memoria
+     */
 	public void dispose() {
 		skin.dispose();
 		labelSkin.dispose();

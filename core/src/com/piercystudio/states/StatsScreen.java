@@ -1,7 +1,7 @@
 /*
  * MenuScreen.java
  * 
- * @author: G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Crea estado de Menu.
@@ -127,6 +127,10 @@ public class StatsScreen implements Screen{
 
 	public void show() { }
 
+	/**
+	 * Metodo de renderizado
+	 * @param delta tiempo delta
+     */
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -135,7 +139,10 @@ public class StatsScreen implements Screen{
 		draw();
 
 	}
-	
+
+	/**
+	 * Metodo de dibujado
+	 */
 	public void draw(){
 		batch.begin();
 		batch.draw(logo, PiercyGame.WIDTH / 2 , PiercyGame.HEIGHT / 2 + 100, 300, 150);
@@ -163,12 +170,24 @@ public class StatsScreen implements Screen{
 	
 	public void resize(int width, int height) { }
 
+	/**
+	 * Metodo ejecutado la pausar el juego
+	 */
 	public void pause() { }
 
+	/**
+	 * Metodo ejecutado al resumir el juego
+	 */
 	public void resume() { }
 
+	/**
+	 * Metodo ejecutado al  esconder el juego
+	 */
 	public void hide() { }
 
+	/**
+	 * Metodo para liberar memoria
+	 */
 	public void dispose() { 
 		
 		myStage.clear();

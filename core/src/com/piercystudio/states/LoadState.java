@@ -1,7 +1,7 @@
 /*
  * LoadState.java
  * 
- * @Author: G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 
  * 19/09/15
  * 

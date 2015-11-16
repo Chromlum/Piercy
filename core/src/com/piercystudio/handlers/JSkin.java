@@ -1,7 +1,7 @@
 /*
  * JSkin.java
  * 
- * @author: G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Crea un TextureAtlas a partir de dos archivos, un .json y un .txt para crear un skin de

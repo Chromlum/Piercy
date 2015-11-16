@@ -1,7 +1,7 @@
 /*
  * LevelSelectState.java
  * 
- * @author: Eric Mendoza
+ * @author: @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Crea un menu para elegir los niveles del juego.

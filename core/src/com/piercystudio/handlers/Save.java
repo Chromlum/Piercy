@@ -1,7 +1,7 @@
 /*
  * Save.java
  * 
- * @author: G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Crea un archivo de texto plano para guardar los datos del juego.

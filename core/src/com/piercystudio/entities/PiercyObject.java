@@ -1,10 +1,11 @@
 /*
  * PiercyObject.java
  * 
- * @author: E. Mendoza, J. Custodio, G. Brolo
- * 16/09/15
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
+ * Fecha: 16/09/15
  * 
- * Entidad madre de los objetos en el juego.
+ * Descripccion: Clase abstracta para representar objetos movibles
+ * en el juego
  * 
  */
 package com.piercystudio.entities;
@@ -19,11 +20,16 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class PiercyObject extends Sprite{
 
-    protected Vector2 velocidad;
-    protected float g;
-    protected float velocidadMax;
-    protected Animation animation;
+    // Atribuos
+    protected Vector2 velocidad; // Vector de velocidad
+    protected float g; // Aceleracion de la gravedad
+    protected float velocidadMax; // Maxima velocidad
+    protected Animation animation; // Animacion
 
+    /**
+     * Constructor
+     * @param sprite Sprite que contiene la textura
+     */
     public PiercyObject(Sprite sprite){
         super(sprite);
         velocidad = new Vector2();
@@ -31,6 +37,10 @@ public abstract class PiercyObject extends Sprite{
         velocidadMax = 120;
     }
 
+    /**
+     * Metodo para dibujar el objeto en pantalla
+     * @param batch
+     */
     @Override
     public void draw(Batch batch){
         update(Gdx.graphics.getDeltaTime());
@@ -43,12 +53,23 @@ public abstract class PiercyObject extends Sprite{
         }
     }
 
+    /**
+     * Metodo abstracto para realizar los calculos antes de dibujar
+     * @param dt tiempo delta
+     */
     public abstract void update(float dt);
 
+    /**
+     * Metodo para destuir el objeto
+     */
     public void dispose(){
         this.getTexture().dispose();
     }
 
+    /**
+     * Metodo getter
+     * @return Velocidad del objeto
+     */
 	public Vector2 getVelocidad(){
 		return velocidad;
 	}

@@ -1,7 +1,7 @@
 /*
  * GameKey.java
  * 
- * @author: G. Brolo
+ * @author: E. Mendoza, J. Custodio, G. Brolo, J. Rosales
  * 16/09/15
  * 
  * Procesador de teclas del juego.
