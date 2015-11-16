@@ -62,8 +62,9 @@ public class MenuScreen implements Screen{
 		}
 
 		
-		//  PiercyGame.res.getMusic("bgmusic").setLooping(true);
-		//  PiercyGame.res.getMusic("bgmusic").play();
+		PiercyGame.res.getMusic("menuMusic").setLooping(true);
+		PiercyGame.res.getMusic("menuMusic").setVolume(0.5f);
+		PiercyGame.res.getMusic("menuMusic").play();
 		
 	}
 	
